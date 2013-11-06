@@ -223,6 +223,6 @@ public class GsonHyperDataFactoryTest {
 		HData3 hdata = new HData3();
 		hdata.metadata(new Meta1());
 		hdata.metadata().setHref("/a/1");
-		Assert.assertEquals("{}", view.write(hdata));
+		Assert.assertEquals("{\"@href\":\"/a/1\"}", view.write(hdata));
 	}
 }

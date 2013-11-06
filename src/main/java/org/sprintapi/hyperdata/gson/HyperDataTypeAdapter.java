@@ -50,23 +50,47 @@ public class HyperDataTypeAdapter extends TypeAdapter<HyperData<Object>> {
 
 	@Override
 	public void write(JsonWriter out, HyperData<Object> value) throws IOException {
-	      if (value == null) {
-	          out.nullValue();
-	          return;
-	        }
+		if (value == null) {
+			out.nullValue();
+			return;
+		}
+		
+		out.beginObject();
+		try {
+			
+			if (value.metadata() != null) {
+				
+		        BoundField metadataField = boundFields.get("metadata");
+		        Map<String, BoundField> metaBoundFields = null;
+				if (!Map.class.isAssignableFrom(value.metadata().getClass())) {
+					metaBoundFields = reflectiveFactory.getBoundFields(gson, metadataField.type, metadataField.type.getRawType());
+				}
 
-	        out.beginObject();
-	        try {
-	          for (BoundField boundField : boundFields.values()) {
-	            if (boundField.serialized) {
-	              out.name(boundField.name);
-	              boundField.write(out, value);
-	            }
-	          }
-	        } catch (IllegalAccessException e) {
-	          throw new AssertionError();
-	        }
-	        out.endObject();
+    			if (metaBoundFields != null) {
+    				for (BoundField boundField : metaBoundFields.values()) {
+    					if (boundField.serialized) {
+    						out.name("@".concat(boundField.name));
+    						boundField.write(out, value.metadata());
+    					}
+    				}
+
+    			} else {		    			
+//    				TypeAdapter<Object > ta = gson.getAdapter(Object.class);
+//    				Object value = ta.read(in);
+//    				((Map)meta).put(name.substring(1), value);
+    			}
+			}
+			
+			for (BoundField boundField : boundFields.values()) {
+				if (boundField.serialized && !"metadata".equals(boundField.name)) {
+					out.name(boundField.name);
+					boundField.write(out, value);
+				}
+			}
+		} catch (IllegalAccessException e) {
+			throw new AssertionError();
+		}
+		out.endObject();
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -109,7 +133,7 @@ public class HyperDataTypeAdapter extends TypeAdapter<HyperData<Object>> {
 	    				((Map)meta).put(name.substring(1), value);
 	    			}
 	    			
-	    		} else {
+	    		} else if ((name != null) && (!name.equals("metadata"))) {
 		            BoundField field = boundFields.get(name);
 		            if (field == null || !field.deserialized) {
 		              in.skipValue();
