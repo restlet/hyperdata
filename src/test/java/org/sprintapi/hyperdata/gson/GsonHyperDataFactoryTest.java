@@ -201,7 +201,7 @@ public class GsonHyperDataFactoryTest {
 		map.metadata().put("href", "/a/1");
 		map.put("first-name", "John");
 		map.put("last-name", "Doe");
-		Assert.assertEquals("{}", view.write(map));
+		Assert.assertEquals("{\"@href\":\"/a/1\",\"first-name\":\"John\",\"last-name\":\"Doe\"}", view.write(map));
 	}
 
 	@Test
