@@ -48,6 +48,7 @@ public class HyperDataTypeAdapter extends TypeAdapter<HyperData<Object>> {
 		this.reflectiveFactory = reflectiveFactory;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void write(JsonWriter out, HyperData<Object> value) throws IOException {
 		if (value == null) {
@@ -74,10 +75,16 @@ public class HyperDataTypeAdapter extends TypeAdapter<HyperData<Object>> {
     					}
     				}
 
-    			} else {		    			
-//    				TypeAdapter<Object > ta = gson.getAdapter(Object.class);
-//    				Object value = ta.read(in);
-//    				((Map)meta).put(name.substring(1), value);
+    			} else {
+    				Map values = (Map)value.metadata();
+    				for (Object key : values.keySet()) {
+    					Object v = values.get(key);
+    					if (v != null) {
+    						out.name("@".concat(key.toString()));
+    	    				TypeAdapter ta = gson.getAdapter(v.getClass());
+    	    				ta.write(out, v);
+    					}
+    				}
     			}
 			}
 			

@@ -215,7 +215,7 @@ public class GsonHyperDataFactoryTest {
 		hdata.setC(new HData1());
 		hdata.getC().setA(3d);
 		hdata.getC().setB(false);
-		Assert.assertEquals("{}", view.write(hdata));
+		Assert.assertEquals("{\"@accept\":\"application/json\",\"@href\":\"/a/2\",\"a\":11.1,\"b\":true,\"c\":{\"a\":3.0,\"b\":false}}", view.write(hdata));
 	}
 	
 	@Test
