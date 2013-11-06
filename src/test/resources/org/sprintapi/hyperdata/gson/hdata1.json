@@ -1,0 +1,14 @@
+{
+	"@href" : "/y",
+	"@content-type" : "application/json",
+	
+	"a" : 10,
+	"b" : true,
+	"c" : {
+		"@href" : "/x",
+		"b" : false
+	},
+	"d" : {
+		"x" : "embedded"
+	}
+}
