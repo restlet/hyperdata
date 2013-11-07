@@ -49,7 +49,7 @@ public class GsonHyperDataFactoryTest {
 	
 	@Before
 	public void setup() {
-		view = new HyperDataGsonBuilder().build();
+		view = new HyperDataGsonBuilder().create();
 	}
 
 	@Test
@@ -207,7 +207,7 @@ public class GsonHyperDataFactoryTest {
 	@Test
 	public void testStringWriteHData1() {
 		HData1 hdata = new HData1();
-		hdata.metadata(new Metadata());
+		hdata.metadata(new Meta());
 		hdata.metadata().setHref("/a/2");
 		hdata.metadata().put("accept", "application/json");
 		hdata.setA(11.1);

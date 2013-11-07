@@ -17,9 +17,9 @@ package org.sprintapi.hyperdata.gson;
 
 import org.sprintapi.hyperdata.HyperData;
 
-public class HData1 implements HyperData<Metadata> {
+public class HData1 implements HyperData<Meta> {
 
-	private Metadata metadata;
+	private Meta metadata;
 	
 	private Double a;
 	private Boolean b;
@@ -47,11 +47,11 @@ public class HData1 implements HyperData<Metadata> {
 		this.c = c;
 	}
 	@Override
-	public Metadata metadata() {
+	public Meta metadata() {
 		return metadata;
 	}
 	@Override
-	public void metadata(Metadata meta) {
+	public void metadata(Meta meta) {
 		this.metadata = meta;
 	}
 	public Embedded getD() {

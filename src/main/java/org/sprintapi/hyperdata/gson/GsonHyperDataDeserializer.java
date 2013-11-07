@@ -16,6 +16,8 @@
 package org.sprintapi.hyperdata.gson;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -30,6 +32,8 @@ import com.google.gson.JsonParseException;
 
 public class GsonHyperDataDeserializer implements JsonDeserializer<HyperMap> {
 
+	protected static String HREF_KEY = "href";
+	
 	@Override
 	public HyperMap deserialize(JsonElement json, Type arg1, JsonDeserializationContext ctx) throws JsonParseException {
 
@@ -47,18 +51,18 @@ public class GsonHyperDataDeserializer implements JsonDeserializer<HyperMap> {
 			final Set<Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
 			if (entrySet != null) {
 				
-				Metadata metadata = null;
+				Map<String, Object> metadata = null;
 				
 				for (Entry<String, JsonElement> entry : entrySet) {
 					if (entry.getKey().startsWith("@")) {
 						if (metadata == null) {
-							metadata = new Metadata();
+							metadata = new HashMap<String, Object>();
 						}	
 						JsonElement value = entry.getValue();
 						if (value != null) {
 							metadata.put(entry.getKey().substring(1),
 								ctx.deserialize(value, 
-									(value.isJsonObject() && value.getAsJsonObject().has("@".concat(Metadata.HREF_KEY)))
+									(value.isJsonObject() && value.getAsJsonObject().has("@".concat(HREF_KEY)))
 									? HyperMap.class
 									: Object.class
 									)
@@ -70,7 +74,7 @@ public class GsonHyperDataDeserializer implements JsonDeserializer<HyperMap> {
 						if (value != null) {
 							hdata.put(entry.getKey(), 
 								ctx.deserialize(value, 
-									(value.isJsonObject() && value.getAsJsonObject().has("@".concat(Metadata.HREF_KEY)))
+									(value.isJsonObject() && value.getAsJsonObject().has("@".concat(HREF_KEY)))
 									? HyperMap.class
 									: Object.class
 									)

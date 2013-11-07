@@ -18,11 +18,11 @@ package org.sprintapi.hyperdata.gson;
 import java.util.HashMap;
 
 
-public class Metadata extends HashMap<String, Object> {
+public class Meta extends HashMap<String, Object> {
 
 	private static final long serialVersionUID = 3805020859705261170L;
 	
-	public static String HREF_KEY = "href";
+	protected static String HREF_KEY = "href";
 	
 	public String getHref() {
 		if (containsKey(HREF_KEY)) {
