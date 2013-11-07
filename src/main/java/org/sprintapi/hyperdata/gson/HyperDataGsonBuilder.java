@@ -395,7 +395,6 @@ public class HyperDataGsonBuilder {
 	 * {@link InstanceCreator}, {@link JsonSerializer}, and a {@link JsonDeserializer} interfaces.
 	 * @return a reference to this {@code HyperDataGsonBuilder} object to fulfill the "Builder" pattern
 	 */
-	@SuppressWarnings({"unchecked", "rawtypes"})
 	public HyperDataGsonBuilder registerTypeAdapter(Type type, Object typeAdapter) {
 		builder.registerTypeAdapter(type, typeAdapter);
 		return this;
@@ -428,7 +427,6 @@ public class HyperDataGsonBuilder {
 	 * @return a reference to this {@code HyperDataGsonBuilder} object to fulfill the "Builder" pattern
 	 * @since 1.7
 	 */
-	@SuppressWarnings({"unchecked", "rawtypes"})
 	public HyperDataGsonBuilder registerTypeHierarchyAdapter(Class<?> baseType, Object typeAdapter) {
 		builder.registerTypeHierarchyAdapter(baseType, typeAdapter);
 		return this;

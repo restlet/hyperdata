@@ -66,15 +66,15 @@ public class GsonHyperDataFactoryTest {
 		Assert.assertTrue(ressMeta.getFile().exists());
 		HyperMap hdata = view.read(ressMeta.createInputStream(), HyperMap.class, 1);
 		Assert.assertNotNull(hdata);
-		Assert.assertNotNull(hdata.setMetadata());
+		Assert.assertNotNull(hdata.getMetadata());
 		Assert.assertEquals(0, hdata.size());
-		Assert.assertNotNull(hdata.setMetadata().get("content-version"));
-		Assert.assertEquals(Double.class, hdata.setMetadata().get("content-version").getClass());
-		Assert.assertEquals(1.0, hdata.setMetadata().get("content-version"));
+		Assert.assertNotNull(hdata.getMetadata().get("content-version"));
+		Assert.assertEquals(Double.class, hdata.getMetadata().get("content-version").getClass());
+		Assert.assertEquals(1.0, hdata.getMetadata().get("content-version"));
 		
-		Assert.assertNotNull(hdata.setMetadata().get("href"));
-		Assert.assertEquals(String.class, hdata.setMetadata().get("href").getClass());
-		Assert.assertEquals("/233232", hdata.setMetadata().get("href"));
+		Assert.assertNotNull(hdata.getMetadata().get("href"));
+		Assert.assertEquals(String.class, hdata.getMetadata().get("href").getClass());
+		Assert.assertEquals("/233232", hdata.getMetadata().get("href"));
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class GsonHyperDataFactoryTest {
 		Assert.assertTrue(ressR1.getFile().exists());
 		HyperMap hdata = view.read(ressR1.createInputStream(), HyperMap.class, 1);
 		Assert.assertNotNull(hdata);
-		Assert.assertNull(hdata.setMetadata());
+		Assert.assertNull(hdata.getMetadata());
 		Assert.assertEquals(3, hdata.size());
 		
 		Assert.assertNotNull(hdata.get("a"));
@@ -103,8 +103,8 @@ public class GsonHyperDataFactoryTest {
 		Assert.assertTrue(ressHData1.getFile().exists());
 		HData1 hdata = view.read(ressHData1.createInputStream(), HData1.class, 1);
 		Assert.assertNotNull(hdata);
-		Assert.assertNotNull(hdata.setMetadata());
-		Assert.assertEquals("/y", hdata.setMetadata().getHref());
+		Assert.assertNotNull(hdata.getMetadata());
+		Assert.assertEquals("/y", hdata.getMetadata().getHref());
 		
 		Assert.assertNotNull(hdata.getA());
 		Assert.assertEquals((Double)10.0d, (Double)(hdata.getA()));
@@ -113,8 +113,8 @@ public class GsonHyperDataFactoryTest {
 		Assert.assertEquals(Boolean.TRUE, hdata.getB());
 
 		Assert.assertNotNull(hdata.getC());
-		Assert.assertNotNull(hdata.getC().setMetadata());
-		Assert.assertEquals("/x", hdata.getC().setMetadata().getHref());
+		Assert.assertNotNull(hdata.getC().getMetadata());
+		Assert.assertEquals("/x", hdata.getC().getMetadata().getHref());
 		Assert.assertNotNull(hdata.getC().getB());
 		Assert.assertEquals(Boolean.FALSE, hdata.getC().getB());
 		
@@ -128,8 +128,8 @@ public class GsonHyperDataFactoryTest {
 		Assert.assertTrue(ressHData1.getFile().exists());
 		HData2 hdata = view.read(ressHData1.createInputStream(), HData2.class, 1);
 		Assert.assertNotNull(hdata);
-		Assert.assertNotNull(hdata.setMetadata());
-		Assert.assertEquals("/y", hdata.setMetadata().get("href"));		
+		Assert.assertNotNull(hdata.getMetadata());
+		Assert.assertEquals("/y", hdata.getMetadata().get("href"));		
 	}
 
 	@Test
@@ -137,9 +137,9 @@ public class GsonHyperDataFactoryTest {
 		Assert.assertTrue(ressHData1.getFile().exists());
 		HData3 hdata = view.read(ressHData1.createInputStream(), HData3.class, 1);
 		Assert.assertNotNull(hdata);
-		Assert.assertNotNull(hdata.setMetadata());
-		Assert.assertEquals("/y", hdata.setMetadata().getHref());
-		Assert.assertEquals("application/json", hdata.setMetadata().getContentType());
+		Assert.assertNotNull(hdata.getMetaX());
+		Assert.assertEquals("/y", hdata.getMetaX().getHref());
+		Assert.assertEquals("application/json", hdata.getMetaX().getContentType());
 	}
 
 	@Test
@@ -155,15 +155,15 @@ public class GsonHyperDataFactoryTest {
 		
 		HyperMap data = view.read("{}", HyperMap.class, 1);
 		Assert.assertNotNull(data);
-		Assert.assertNull(data.setMetadata());
+		Assert.assertNull(data.getMetadata());
 		Assert.assertEquals(0, data.size());
 		
 		HyperMap data2 = view.read("{\"@meta\":false}", HyperHashMap.class, 1);
 		Assert.assertNotNull(data2);
-		Assert.assertNotNull(data2.setMetadata());
-		Assert.assertNotNull(data2.setMetadata().get("meta"));
-		Assert.assertEquals(Boolean.class, data2.setMetadata().get("meta").getClass());
-		Assert.assertEquals(Boolean.FALSE, data2.setMetadata().get("meta"));
+		Assert.assertNotNull(data2.getMetadata());
+		Assert.assertNotNull(data2.getMetadata().get("meta"));
+		Assert.assertEquals(Boolean.class, data2.getMetadata().get("meta").getClass());
+		Assert.assertEquals(Boolean.FALSE, data2.getMetadata().get("meta"));
 	}
 
 	@Test
@@ -197,8 +197,8 @@ public class GsonHyperDataFactoryTest {
 	@Test
 	public void testStringWriteHashMap() {
 		HyperHashMap map = new HyperHashMap();
-		map.getMetadata(new HashMap<String, Object>());
-		map.setMetadata().put("href", "/a/1");
+		map.setMetadata(new HashMap<String, Object>());
+		map.getMetadata().put("href", "/a/1");
 		map.put("first-name", "John");
 		map.put("last-name", "Doe");
 		Assert.assertEquals("{\"@href\":\"/a/1\",\"first-name\":\"John\",\"last-name\":\"Doe\"}", view.write(map, 1));
@@ -207,9 +207,9 @@ public class GsonHyperDataFactoryTest {
 	@Test
 	public void testStringWriteHData1() {
 		HData1 hdata = new HData1();
-		hdata.getMetadata(new Meta());
-		hdata.setMetadata().setHref("/a/2");
-		hdata.setMetadata().put("accept", "application/json");
+		hdata.setMetadata(new Meta());
+		hdata.getMetadata().setHref("/a/2");
+		hdata.getMetadata().put("accept", "application/json");
 		hdata.setA(11.1);
 		hdata.setB(true);
 		hdata.setC(new HData1());
@@ -221,8 +221,8 @@ public class GsonHyperDataFactoryTest {
 	@Test
 	public void testStringWriteHData3() {
 		HData3 hdata = new HData3();
-		hdata.getMetadata(new Meta1());
-		hdata.setMetadata().setHref("/a/1");
+		hdata.setMetaX(new Meta1());
+		hdata.getMetaX().setHref("/a/1");
 		Assert.assertEquals("{\"@href\":\"/a/1\"}", view.write(hdata, 1));
 	}
 }

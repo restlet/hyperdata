@@ -15,8 +15,12 @@
  */
 package org.sprintapi.hyperdata.gson;
 
+import java.lang.reflect.Method;
+
+import org.apache.commons.lang.WordUtils;
 import org.sprintapi.hyperdata.HyperData;
 import org.sprintapi.hyperdata.HyperMap;
+import org.sprintapi.hyperdata.Metadata;
 
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
@@ -47,11 +51,55 @@ public class HyperDataAdapterFactory extends ReflectiveTypeAdapterFactory implem
 		
 		Class<? super T> raw = type.getRawType();
 
-	    if (!Object.class.isAssignableFrom(raw) || !HyperData.class.isAssignableFrom(raw) || HyperMap.class.isAssignableFrom(raw)) {
-	    	return null; // it's a primitive or isn't hyperdata
+	    if (!Object.class.isAssignableFrom(raw) || HyperMap.class.isAssignableFrom(raw)) {
+	    	return null; // it's a primitive or HyperMap
 	    }
-	        
+
+	    if (!raw.isAnnotationPresent(HyperData.class)) {
+	    	return null; // it's not hyperdata
+	    }
+
+	    MetadataAccess metadataAccess = new MetadataAccess();
+	    
+	    for (Method method : raw.getMethods()) {
+	    	if (method.isAnnotationPresent(Metadata.class)) {
+	    		if (method.getName().startsWith("get")) {
+	    			metadataAccess.getter = method;
+	    			metadataAccess.fieldName = method.getName().substring(3);
+	    			
+	    		} else if (method.getName().startsWith("set")) {
+	    			metadataAccess.setter = method;
+	    			metadataAccess.fieldName = method.getName().substring(3);	    			
+	    		}	    		
+	    	}
+	    }
+	    
+	    if (metadataAccess.fieldName != null) {
+	    	if (metadataAccess.getter == null) {
+	    		for (Method method : raw.getMethods()) {
+	    			if (method.getName().equals("get" + metadataAccess.fieldName)) {
+	    				metadataAccess.getter = method;
+	    				break;
+	    			}
+	    		}
+	    	} else if (metadataAccess.setter == null) {
+	    		for (Method method : raw.getMethods()) {
+	    			if (method.getName().equals("set" + metadataAccess.fieldName)) {
+	    				metadataAccess.setter = method;
+	    				break;
+	    			}
+	    		}	    		
+	    	}
+	    	metadataAccess.fieldName = WordUtils.uncapitalize(metadataAccess.fieldName);
+	    }
+
 	    ObjectConstructor<T> constructor = constructorConstructor.get(type);	    
-	    return (TypeAdapter<T>) new HyperDataTypeAdapter(constructorConstructor, (ObjectConstructor<HyperData<Object>>)constructor, getBoundFields(gson, type, raw), gson, this);
+	    return (TypeAdapter<T>) new HyperDataTypeAdapter(metadataAccess, constructorConstructor, (ObjectConstructor)constructor, getBoundFields(gson, type, raw), gson, this);
+	}
+	
+	protected class MetadataAccess {
+		public String fieldName;
+		public Method getter;
+		public Method setter;
 	}
 }

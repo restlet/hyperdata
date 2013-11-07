@@ -13,15 +13,20 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.sprintapi.hyperdata;
+package org.sprintapi.hyperdata.gson;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.sprintapi.hyperdata.Metadata;
 
-@Target({ ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface HyperData {
+public class HData3Base {
 
+	private Meta1 metaX;
+
+	@Metadata
+	public Meta1 getMetaX() {
+		return metaX;
+	}
+	
+	public void setMetaX(Meta1 metadata) {
+		this.metaX = metadata;
+	}
 }

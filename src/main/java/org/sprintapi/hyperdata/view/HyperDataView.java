@@ -20,18 +20,15 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 
-import org.sprintapi.hyperdata.HyperData;
-import org.sprintapi.hyperdata.HyperMap;
-
 
 public interface HyperDataView {
 	
-	<T extends HyperData<?>> T read(InputStream stream, Class<T> clazz, int depth);
-	void write(HyperData<?> hdata, OutputStream stream, int depth);
+	<T> T read(InputStream stream, Class<T> clazz, int depth);
+	void write(Object hdata, OutputStream stream, int depth);
 
-	<T extends HyperData<?>> T read(String string, Class<T> clazz, int depth);
-	String write(HyperData<?> data, int depth);
+	<T> T read(String string, Class<T> clazz, int depth);
+	String write(Object data, int depth);
 	
-	<T extends HyperData<?>> T read(Reader reader, Class<T> clazz, int depth);
-	void write(HyperData<?> hdata, Writer writer, int depth);
+	<T> T read(Reader reader, Class<T> clazz, int depth);
+	void write(Object hdata, Writer writer, int depth);
 }

@@ -16,9 +16,10 @@
 package org.sprintapi.hyperdata.gson;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-import org.sprintapi.hyperdata.HyperData;
+import org.sprintapi.hyperdata.gson.HyperDataAdapterFactory.MetadataAccess;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -31,26 +32,28 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
-public class HyperDataTypeAdapter extends TypeAdapter<HyperData<Object>> {
+public class HyperDataTypeAdapter extends TypeAdapter<Object> {
 
 	private final ConstructorConstructor constructorConstructor;
-    private final ObjectConstructor<HyperData<Object>> constructor;
+    private final ObjectConstructor<Object> constructor;
     private final Map<String, BoundField> boundFields;
     private final Gson gson;
     private final ReflectiveTypeAdapterFactory reflectiveFactory;
+    private final MetadataAccess metadataAccess;
 
-	public HyperDataTypeAdapter(ConstructorConstructor constructorConstructor, ObjectConstructor<HyperData<Object>> constructor, Map<String, BoundField> boundFields, Gson gson, ReflectiveTypeAdapterFactory reflectiveFactory) {
+	public HyperDataTypeAdapter(MetadataAccess metaAccess, ConstructorConstructor constructorConstructor, ObjectConstructor<Object> constructor, Map<String, BoundField> boundFields, Gson gson, ReflectiveTypeAdapterFactory reflectiveFactory) {
 		super();
 		this.constructorConstructor = constructorConstructor;
 		this.constructor = constructor;
 		this.boundFields = boundFields;
 		this.gson = gson;
 		this.reflectiveFactory = reflectiveFactory;
+		this.metadataAccess = metaAccess;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void write(JsonWriter out, HyperData<Object> value) throws IOException {
+	public void write(JsonWriter out, Object value) throws IOException {
 		if (value == null) {
 			out.nullValue();
 			return;
@@ -58,43 +61,56 @@ public class HyperDataTypeAdapter extends TypeAdapter<HyperData<Object>> {
 		
 		out.beginObject();
 		try {
-			
-			if (value.setMetadata() != null) {
-				
-		        BoundField metadataField = boundFields.get("metadata");
-		        Map<String, BoundField> metaBoundFields = null;
-				if (!Map.class.isAssignableFrom(value.setMetadata().getClass())) {
-					metaBoundFields = reflectiveFactory.getBoundFields(gson, metadataField.type, metadataField.type.getRawType());
+			if ((metadataAccess != null) && (metadataAccess.fieldName != null)) {
+
+				if (metadataAccess.getter == null) {
+					//TODO
+					throw new AssertionError();
 				}
+				
+				Object metadata = metadataAccess.getter.invoke(value);
 
-    			if (metaBoundFields != null) {
-    				for (BoundField boundField : metaBoundFields.values()) {
-    					if (boundField.serialized) {
-    						out.name("@".concat(boundField.name));
-    						boundField.write(out, value.setMetadata());
-    					}
-    				}
-
-    			} else {
-    				Map values = (Map)value.setMetadata();
-    				for (Object key : values.keySet()) {
-    					Object v = values.get(key);
-    					if (v != null) {
-    						out.name("@".concat(key.toString()));
-    	    				TypeAdapter ta = gson.getAdapter(v.getClass());
-    	    				ta.write(out, v);
-    					}
-    				}
-    			}
+				
+		        BoundField metadataField = boundFields.get(metadataAccess.fieldName);
+		        if (metadataField != null && metadata != null) {
+			        Map<String, BoundField> metaBoundFields = null;
+					if (!Map.class.isAssignableFrom(metadata.getClass())) {
+						metaBoundFields = reflectiveFactory.getBoundFields(gson, metadataField.type, metadataField.type.getRawType());
+					}
+					
+	    			if (metaBoundFields != null) {
+	    				for (BoundField boundField : metaBoundFields.values()) {
+	    					if (boundField.serialized) {
+	    						out.name("@".concat(boundField.name));
+	    						boundField.write(out, metadata);
+	    					}
+	    				}
+	
+	    			} else {
+	    				Map values = (Map)metadata;
+	    				for (Object key : values.keySet()) {
+	    					Object v = values.get(key);
+	    					if (v != null) {
+	    						out.name("@".concat(key.toString()));
+	    	    				TypeAdapter ta = gson.getAdapter(v.getClass());
+	    	    				ta.write(out, v);
+	    					}
+	    				}
+	    			}
+		        }
 			}
 			
 			for (BoundField boundField : boundFields.values()) {
-				if (boundField.serialized && !"metadata".equals(boundField.name)) {
+				if (boundField.serialized && !boundField.name.equals(metadataAccess.fieldName)) {
 					out.name(boundField.name);
 					boundField.write(out, value);
 				}
 			}
 		} catch (IllegalAccessException e) {
+			throw new AssertionError();
+		} catch (IllegalArgumentException e) {
+			throw new AssertionError();
+		} catch (InvocationTargetException e) {
 			throw new AssertionError();
 		}
 		out.endObject();
@@ -102,24 +118,27 @@ public class HyperDataTypeAdapter extends TypeAdapter<HyperData<Object>> {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public HyperData<Object> read(JsonReader in) throws IOException {
+	public Object read(JsonReader in) throws IOException {
 		if (in.peek() == JsonToken.NULL) {
 			in.nextNull();
 			return null;
 		}
 
-        HyperData<Object> instance = constructor.construct();
+        Object instance = constructor.construct();
         
-        BoundField metadataField = boundFields.get("metadata");
+        BoundField metadataField = null;
+        if (metadataAccess != null) {
+        	metadataField = boundFields.get(metadataAccess.fieldName);
+        }
         
         Object meta = null;
         Map<String, BoundField> metaBoundFields = null;
-        
+
         try {
         	in.beginObject();
         	while (in.hasNext()) {
         		String name = in.nextName();
-	    		if ((name != null) && (name.startsWith("@"))) {
+	    		if ((name != null) && (metadataField != null) && (name.startsWith("@"))) {
 	    			if (meta == null) {
 	    				meta = constructorConstructor.get(metadataField.type).construct();
 	    				if (!Map.class.isAssignableFrom(meta.getClass())) {
@@ -140,7 +159,7 @@ public class HyperDataTypeAdapter extends TypeAdapter<HyperData<Object>> {
 	    				((Map)meta).put(name.substring(1), value);
 	    			}
 	    			
-	    		} else if ((name != null) && (!name.equals("metadata"))) {
+	    		} else if ((name != null) && (!name.equals(metadataAccess.fieldName))) {
 		            BoundField field = boundFields.get(name);
 		            if (field == null || !field.deserialized) {
 		              in.skipValue();
@@ -149,13 +168,22 @@ public class HyperDataTypeAdapter extends TypeAdapter<HyperData<Object>> {
 		            }
 	    		}
         	}
+        	if (metadataAccess.setter == null) {
+        		//TODO
+        		throw new AssertionError();
+        	}
+        	metadataAccess.setter.invoke(instance, meta);
+        	
         } catch (IllegalStateException e) {
         	throw new JsonSyntaxException(e);
         } catch (IllegalAccessException e) {
         	throw new AssertionError(e);
-        }
+        } catch (IllegalArgumentException e) {
+        	throw new AssertionError(e);
+		} catch (InvocationTargetException e) {
+        	throw new AssertionError(e);
+		}
         in.endObject();
-        instance.getMetadata(meta);
         return instance;
 	}
 }

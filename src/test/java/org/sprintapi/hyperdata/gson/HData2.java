@@ -18,16 +18,18 @@ package org.sprintapi.hyperdata.gson;
 import java.util.Map;
 
 import org.sprintapi.hyperdata.HyperData;
+import org.sprintapi.hyperdata.Metadata;
 
-public class HData2 implements HyperData<Map<String, Object>> {
+@HyperData
+public class HData2 {
 
 	private Map<String, Object> metadata;
 
-	public Map<String, Object> setMetadata() {
+	@Metadata
+	public Map<String, Object> getMetadata() {
 		return metadata;
 	}
-
-	public void getMetadata(Map<String, Object> metadata) {
+	public void setMetadata(Map<String, Object> metadata) {
 		this.metadata = metadata;
 	}
 }

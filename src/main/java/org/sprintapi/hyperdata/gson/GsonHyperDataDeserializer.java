@@ -82,7 +82,7 @@ public class GsonHyperDataDeserializer implements JsonDeserializer<HyperMap> {
 						}
 					}
 				}
-				hdata.getMetadata(metadata);
+				hdata.setMetadata(metadata);
 			}
 		}
 		return hdata;

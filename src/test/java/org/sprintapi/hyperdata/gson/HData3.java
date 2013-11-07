@@ -17,15 +17,16 @@ package org.sprintapi.hyperdata.gson;
 
 import org.sprintapi.hyperdata.HyperData;
 
-public class HData3 implements HyperData<Meta1> {
+@HyperData
+public class HData3 extends HData3Base {
 
-	private Meta1 metadata;
+	private String x;
 
-	public Meta1 setMetadata() {
-		return metadata;
+	public String getX() {
+		return x;
 	}
 
-	public void getMetadata(Meta1 metadata) {
-		this.metadata = metadata;
+	public void setX(String x) {
+		this.x = x;
 	}
 }

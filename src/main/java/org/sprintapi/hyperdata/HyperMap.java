@@ -18,9 +18,14 @@ package org.sprintapi.hyperdata;
 import java.util.Map;
 import java.util.Set;
 
-public interface HyperMap extends HyperData<Map<String, Object>> {
+@HyperData
+public interface HyperMap {
 
 	Set<String> names();
 	Object get(String name);
 	int size();
+	
+	@Metadata
+	Map<String, Object> getMetadata();
+	void setMetadata(Map<String, Object> metadata);
 }
