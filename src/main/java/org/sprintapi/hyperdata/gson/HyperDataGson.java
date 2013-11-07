@@ -19,6 +19,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
 
 import org.sprintapi.hyperdata.HyperData;
 import org.sprintapi.hyperdata.HyperMap;
@@ -41,17 +43,28 @@ public class HyperDataGson implements HyperDataView {
 	}
 
 	@Override
-	public void write(HyperMap hdata, OutputStream stream) {
-		gson.toJson(hdata, new OutputStreamWriter(stream));		
-	}
-
-	@Override
 	public <T extends HyperData<?>> T read(String string, Class<T> clazz) {
 		return gson.fromJson(string, clazz);
 	}
 
 	@Override
+	public void write(HyperMap hdata, Writer writer) {
+		gson.toJson(hdata, writer);		
+	}
+
+	@Override
 	public String write(HyperData<?> data) {
 		return gson.toJson(data);
+	}
+
+	@Override
+	public void write(HyperMap hdata, OutputStream stream) {
+		gson.toJson(hdata, new OutputStreamWriter(stream));
+		
+	}
+
+	@Override
+	public <T extends HyperData<?>> T read(Reader reader, Class<T> clazz) {
+		return gson.fromJson(reader, clazz);
 	}	
 }

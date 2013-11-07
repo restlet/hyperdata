@@ -17,6 +17,8 @@ package org.sprintapi.hyperdata.view;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
 
 import org.sprintapi.hyperdata.HyperData;
 import org.sprintapi.hyperdata.HyperMap;
@@ -29,5 +31,7 @@ public interface HyperDataView {
 
 	<T extends HyperData<?>> T read(String string, Class<T> clazz);
 	String write(HyperData<?> data);
-
+	
+	<T extends HyperData<?>> T read(Reader reader, Class<T> clazz);
+	void write(HyperMap hdata, Writer writer);
 }
