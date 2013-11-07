@@ -47,11 +47,11 @@ public class HData1 implements HyperData<Meta> {
 		this.c = c;
 	}
 	@Override
-	public Meta metadata() {
+	public Meta setMetadata() {
 		return metadata;
 	}
 	@Override
-	public void metadata(Meta meta) {
+	public void getMetadata(Meta meta) {
 		this.metadata = meta;
 	}
 	public Embedded getD() {

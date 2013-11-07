@@ -23,11 +23,11 @@ public class HData2 implements HyperData<Map<String, Object>> {
 
 	private Map<String, Object> metadata;
 
-	public Map<String, Object> metadata() {
+	public Map<String, Object> setMetadata() {
 		return metadata;
 	}
 
-	public void metadata(Map<String, Object> metadata) {
+	public void getMetadata(Map<String, Object> metadata) {
 		this.metadata = metadata;
 	}
 }

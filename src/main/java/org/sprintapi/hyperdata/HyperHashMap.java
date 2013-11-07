@@ -26,11 +26,11 @@ public class HyperHashMap extends HashMap<String, Object> implements HyperMap {
 	Map<String, Object> metadata;
 	
 	@Override
-	public Map<String, Object> metadata() {
+	public Map<String, Object> setMetadata() {
 		return metadata;
 	}
 
-	public void metadata(Map<String, Object> metadata) {
+	public void getMetadata(Map<String, Object> metadata) {
 		this.metadata = metadata;
 	}
 

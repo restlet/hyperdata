@@ -36,7 +36,7 @@ public class GsonHyperDataSerializer implements JsonSerializer<HyperMap> {
 		
 		JsonObject obj = new JsonObject();
 		
-		final Map<String, Object> metadata = src.metadata(); 
+		final Map<String, Object> metadata = src.setMetadata(); 
 		if (metadata != null) {
 			for (String name : metadata.keySet()) {
 				Object value = metadata.get(name);

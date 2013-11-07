@@ -23,7 +23,6 @@ import java.io.Reader;
 import java.io.Writer;
 
 import org.sprintapi.hyperdata.HyperData;
-import org.sprintapi.hyperdata.HyperMap;
 import org.sprintapi.hyperdata.view.HyperDataView;
 
 import com.google.gson.Gson;
@@ -38,33 +37,33 @@ public class HyperDataGson implements HyperDataView {
 	}
 
 	@Override
-	public <T extends HyperData<?>> T read(InputStream stream, Class<T> clazz) {
+	public <T extends HyperData<?>> T read(InputStream stream, Class<T> clazz, int depth) {
 		return gson.fromJson(new InputStreamReader(stream), clazz);
 	}
 
 	@Override
-	public <T extends HyperData<?>> T read(String string, Class<T> clazz) {
+	public <T extends HyperData<?>> T read(String string, Class<T> clazz, int depth) {
 		return gson.fromJson(string, clazz);
 	}
 
 	@Override
-	public void write(HyperData<?> hdata, Writer writer) {
+	public void write(HyperData<?> hdata, Writer writer, int depth) {
 		gson.toJson(hdata, writer);		
 	}
 
 	@Override
-	public String write(HyperData<?> data) {
+	public String write(HyperData<?> data, int depth) {
 		return gson.toJson(data);
 	}
 
 	@Override
-	public void write(HyperData<?> hdata, OutputStream stream) {
+	public void write(HyperData<?> hdata, OutputStream stream, int depth) {
 		gson.toJson(hdata, new OutputStreamWriter(stream));
 		
 	}
 
 	@Override
-	public <T extends HyperData<?>> T read(Reader reader, Class<T> clazz) {
+	public <T extends HyperData<?>> T read(Reader reader, Class<T> clazz, int depth) {
 		return gson.fromJson(reader, clazz);
 	}	
 }

@@ -57,32 +57,32 @@ public class GsonHyperDataFactoryTest {
 		Assert.assertTrue(ressZeroLength.getFile().exists());
 		Assert.assertTrue(ressBlank.getFile().exists());
 		
-		Assert.assertNull(view.read(ressZeroLength.createInputStream(), HyperMap.class));
-		Assert.assertNull(view.read(ressBlank.createInputStream(), HyperMap.class));
+		Assert.assertNull(view.read(ressZeroLength.createInputStream(), HyperMap.class, 1));
+		Assert.assertNull(view.read(ressBlank.createInputStream(), HyperMap.class, 1));
 	}
 
 	@Test
 	public void testReadMetaIS() throws IOException {
 		Assert.assertTrue(ressMeta.getFile().exists());
-		HyperMap hdata = view.read(ressMeta.createInputStream(), HyperMap.class);
+		HyperMap hdata = view.read(ressMeta.createInputStream(), HyperMap.class, 1);
 		Assert.assertNotNull(hdata);
-		Assert.assertNotNull(hdata.metadata());
+		Assert.assertNotNull(hdata.setMetadata());
 		Assert.assertEquals(0, hdata.size());
-		Assert.assertNotNull(hdata.metadata().get("content-version"));
-		Assert.assertEquals(Double.class, hdata.metadata().get("content-version").getClass());
-		Assert.assertEquals(1.0, hdata.metadata().get("content-version"));
+		Assert.assertNotNull(hdata.setMetadata().get("content-version"));
+		Assert.assertEquals(Double.class, hdata.setMetadata().get("content-version").getClass());
+		Assert.assertEquals(1.0, hdata.setMetadata().get("content-version"));
 		
-		Assert.assertNotNull(hdata.metadata().get("href"));
-		Assert.assertEquals(String.class, hdata.metadata().get("href").getClass());
-		Assert.assertEquals("/233232", hdata.metadata().get("href"));
+		Assert.assertNotNull(hdata.setMetadata().get("href"));
+		Assert.assertEquals(String.class, hdata.setMetadata().get("href").getClass());
+		Assert.assertEquals("/233232", hdata.setMetadata().get("href"));
 	}
 
 	@Test
 	public void testReadSimpleIS() throws IOException {
 		Assert.assertTrue(ressR1.getFile().exists());
-		HyperMap hdata = view.read(ressR1.createInputStream(), HyperMap.class);
+		HyperMap hdata = view.read(ressR1.createInputStream(), HyperMap.class, 1);
 		Assert.assertNotNull(hdata);
-		Assert.assertNull(hdata.metadata());
+		Assert.assertNull(hdata.setMetadata());
 		Assert.assertEquals(3, hdata.size());
 		
 		Assert.assertNotNull(hdata.get("a"));
@@ -101,10 +101,10 @@ public class GsonHyperDataFactoryTest {
 	@Test
 	public void testReadHData1IS() throws IOException {
 		Assert.assertTrue(ressHData1.getFile().exists());
-		HData1 hdata = view.read(ressHData1.createInputStream(), HData1.class);
+		HData1 hdata = view.read(ressHData1.createInputStream(), HData1.class, 1);
 		Assert.assertNotNull(hdata);
-		Assert.assertNotNull(hdata.metadata());
-		Assert.assertEquals("/y", hdata.metadata().getHref());
+		Assert.assertNotNull(hdata.setMetadata());
+		Assert.assertEquals("/y", hdata.setMetadata().getHref());
 		
 		Assert.assertNotNull(hdata.getA());
 		Assert.assertEquals((Double)10.0d, (Double)(hdata.getA()));
@@ -113,8 +113,8 @@ public class GsonHyperDataFactoryTest {
 		Assert.assertEquals(Boolean.TRUE, hdata.getB());
 
 		Assert.assertNotNull(hdata.getC());
-		Assert.assertNotNull(hdata.getC().metadata());
-		Assert.assertEquals("/x", hdata.getC().metadata().getHref());
+		Assert.assertNotNull(hdata.getC().setMetadata());
+		Assert.assertEquals("/x", hdata.getC().setMetadata().getHref());
 		Assert.assertNotNull(hdata.getC().getB());
 		Assert.assertEquals(Boolean.FALSE, hdata.getC().getB());
 		
@@ -126,58 +126,58 @@ public class GsonHyperDataFactoryTest {
 	@Test
 	public void testReadHData2IS() throws IOException {
 		Assert.assertTrue(ressHData1.getFile().exists());
-		HData2 hdata = view.read(ressHData1.createInputStream(), HData2.class);
+		HData2 hdata = view.read(ressHData1.createInputStream(), HData2.class, 1);
 		Assert.assertNotNull(hdata);
-		Assert.assertNotNull(hdata.metadata());
-		Assert.assertEquals("/y", hdata.metadata().get("href"));		
+		Assert.assertNotNull(hdata.setMetadata());
+		Assert.assertEquals("/y", hdata.setMetadata().get("href"));		
 	}
 
 	@Test
 	public void testReadHData3IS() throws IOException {
 		Assert.assertTrue(ressHData1.getFile().exists());
-		HData3 hdata = view.read(ressHData1.createInputStream(), HData3.class);
+		HData3 hdata = view.read(ressHData1.createInputStream(), HData3.class, 1);
 		Assert.assertNotNull(hdata);
-		Assert.assertNotNull(hdata.metadata());
-		Assert.assertEquals("/y", hdata.metadata().getHref());
-		Assert.assertEquals("application/json", hdata.metadata().getContentType());
+		Assert.assertNotNull(hdata.setMetadata());
+		Assert.assertEquals("/y", hdata.setMetadata().getHref());
+		Assert.assertEquals("application/json", hdata.setMetadata().getContentType());
 	}
 
 	@Test
 	public void testReadBlankString() {
-		Assert.assertNull(view.read("", HyperMap.class));
-		Assert.assertNull(view.read((String)null, HyperMap.class));
-		Assert.assertNull(view.read("     ", HyperMap.class));
-		Assert.assertNull(view.read("\t\n", HyperMap.class));
+		Assert.assertNull(view.read("", HyperMap.class, 1));
+		Assert.assertNull(view.read((String)null, HyperMap.class, 1));
+		Assert.assertNull(view.read("     ", HyperMap.class, 1));
+		Assert.assertNull(view.read("\t\n", HyperMap.class, 1));
 	}
 
 	@Test
 	public void testReadString() {
 		
-		HyperMap data = view.read("{}", HyperMap.class);
+		HyperMap data = view.read("{}", HyperMap.class, 1);
 		Assert.assertNotNull(data);
-		Assert.assertNull(data.metadata());
+		Assert.assertNull(data.setMetadata());
 		Assert.assertEquals(0, data.size());
 		
-		HyperMap data2 = view.read("{\"@meta\":false}", HyperHashMap.class);
+		HyperMap data2 = view.read("{\"@meta\":false}", HyperHashMap.class, 1);
 		Assert.assertNotNull(data2);
-		Assert.assertNotNull(data2.metadata());
-		Assert.assertNotNull(data2.metadata().get("meta"));
-		Assert.assertEquals(Boolean.class, data2.metadata().get("meta").getClass());
-		Assert.assertEquals(Boolean.FALSE, data2.metadata().get("meta"));
+		Assert.assertNotNull(data2.setMetadata());
+		Assert.assertNotNull(data2.setMetadata().get("meta"));
+		Assert.assertEquals(Boolean.class, data2.setMetadata().get("meta").getClass());
+		Assert.assertEquals(Boolean.FALSE, data2.setMetadata().get("meta"));
 	}
 
 	@Test
 	public void testReadInvalidString() {
 
 		try {
-			view.read("x", HyperMap.class);
+			view.read("x", HyperMap.class, 1);
 			Assert.assertFalse(true);
 		} catch (JsonParseException e) {
 			
 		}
 
 		try {
-			view.read("false", HyperMap.class);
+			view.read("false", HyperMap.class, 1);
 			Assert.assertFalse(true);
 		} catch (JsonParseException e) {
 			
@@ -186,43 +186,43 @@ public class GsonHyperDataFactoryTest {
 
 	@Test
 	public void testStringWriteNull() {		
-		Assert.assertEquals("null", view.write(null));
+		Assert.assertEquals("null", view.write(null, 1));
 	}
 
 	@Test
 	public void testStringWriteEmpty() {		
-		Assert.assertEquals("{}", view.write(new HyperHashMap()));
+		Assert.assertEquals("{}", view.write(new HyperHashMap(), 1));
 	}
 	
 	@Test
 	public void testStringWriteHashMap() {
 		HyperHashMap map = new HyperHashMap();
-		map.metadata(new HashMap<String, Object>());
-		map.metadata().put("href", "/a/1");
+		map.getMetadata(new HashMap<String, Object>());
+		map.setMetadata().put("href", "/a/1");
 		map.put("first-name", "John");
 		map.put("last-name", "Doe");
-		Assert.assertEquals("{\"@href\":\"/a/1\",\"first-name\":\"John\",\"last-name\":\"Doe\"}", view.write(map));
+		Assert.assertEquals("{\"@href\":\"/a/1\",\"first-name\":\"John\",\"last-name\":\"Doe\"}", view.write(map, 1));
 	}
 
 	@Test
 	public void testStringWriteHData1() {
 		HData1 hdata = new HData1();
-		hdata.metadata(new Meta());
-		hdata.metadata().setHref("/a/2");
-		hdata.metadata().put("accept", "application/json");
+		hdata.getMetadata(new Meta());
+		hdata.setMetadata().setHref("/a/2");
+		hdata.setMetadata().put("accept", "application/json");
 		hdata.setA(11.1);
 		hdata.setB(true);
 		hdata.setC(new HData1());
 		hdata.getC().setA(3d);
 		hdata.getC().setB(false);
-		Assert.assertEquals("{\"@accept\":\"application/json\",\"@href\":\"/a/2\",\"a\":11.1,\"b\":true,\"c\":{\"a\":3.0,\"b\":false}}", view.write(hdata));
+		Assert.assertEquals("{\"@accept\":\"application/json\",\"@href\":\"/a/2\",\"a\":11.1,\"b\":true,\"c\":{\"a\":3.0,\"b\":false}}", view.write(hdata, 1));
 	}
 	
 	@Test
 	public void testStringWriteHData3() {
 		HData3 hdata = new HData3();
-		hdata.metadata(new Meta1());
-		hdata.metadata().setHref("/a/1");
-		Assert.assertEquals("{\"@href\":\"/a/1\"}", view.write(hdata));
+		hdata.getMetadata(new Meta1());
+		hdata.setMetadata().setHref("/a/1");
+		Assert.assertEquals("{\"@href\":\"/a/1\"}", view.write(hdata, 1));
 	}
 }

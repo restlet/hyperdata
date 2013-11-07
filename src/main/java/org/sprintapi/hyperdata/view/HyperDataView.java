@@ -26,12 +26,12 @@ import org.sprintapi.hyperdata.HyperMap;
 
 public interface HyperDataView {
 	
-	<T extends HyperData<?>> T read(InputStream stream, Class<T> clazz);
-	void write(HyperData<?> hdata, OutputStream stream);
+	<T extends HyperData<?>> T read(InputStream stream, Class<T> clazz, int depth);
+	void write(HyperData<?> hdata, OutputStream stream, int depth);
 
-	<T extends HyperData<?>> T read(String string, Class<T> clazz);
-	String write(HyperData<?> data);
+	<T extends HyperData<?>> T read(String string, Class<T> clazz, int depth);
+	String write(HyperData<?> data, int depth);
 	
-	<T extends HyperData<?>> T read(Reader reader, Class<T> clazz);
-	void write(HyperData<?> hdata, Writer writer);
+	<T extends HyperData<?>> T read(Reader reader, Class<T> clazz, int depth);
+	void write(HyperData<?> hdata, Writer writer, int depth);
 }

@@ -21,11 +21,11 @@ public class HData3 implements HyperData<Meta1> {
 
 	private Meta1 metadata;
 
-	public Meta1 metadata() {
+	public Meta1 setMetadata() {
 		return metadata;
 	}
 
-	public void metadata(Meta1 metadata) {
+	public void getMetadata(Meta1 metadata) {
 		this.metadata = metadata;
 	}
 }

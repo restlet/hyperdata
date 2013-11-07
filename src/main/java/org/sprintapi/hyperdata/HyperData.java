@@ -17,6 +17,6 @@ package org.sprintapi.hyperdata;
 
 public interface HyperData<T> {
 
-	T metadata();
-	void metadata(T meta);
+	T setMetadata();
+	void getMetadata(T meta);
 }

@@ -59,11 +59,11 @@ public class HyperDataTypeAdapter extends TypeAdapter<HyperData<Object>> {
 		out.beginObject();
 		try {
 			
-			if (value.metadata() != null) {
+			if (value.setMetadata() != null) {
 				
 		        BoundField metadataField = boundFields.get("metadata");
 		        Map<String, BoundField> metaBoundFields = null;
-				if (!Map.class.isAssignableFrom(value.metadata().getClass())) {
+				if (!Map.class.isAssignableFrom(value.setMetadata().getClass())) {
 					metaBoundFields = reflectiveFactory.getBoundFields(gson, metadataField.type, metadataField.type.getRawType());
 				}
 
@@ -71,12 +71,12 @@ public class HyperDataTypeAdapter extends TypeAdapter<HyperData<Object>> {
     				for (BoundField boundField : metaBoundFields.values()) {
     					if (boundField.serialized) {
     						out.name("@".concat(boundField.name));
-    						boundField.write(out, value.metadata());
+    						boundField.write(out, value.setMetadata());
     					}
     				}
 
     			} else {
-    				Map values = (Map)value.metadata();
+    				Map values = (Map)value.setMetadata();
     				for (Object key : values.keySet()) {
     					Object v = values.get(key);
     					if (v != null) {
@@ -155,7 +155,7 @@ public class HyperDataTypeAdapter extends TypeAdapter<HyperData<Object>> {
         	throw new AssertionError(e);
         }
         in.endObject();
-        instance.metadata(meta);
+        instance.getMetadata(meta);
         return instance;
 	}
 }
