@@ -27,11 +27,11 @@ import org.sprintapi.hyperdata.HyperMap;
 public interface HyperDataView {
 	
 	<T extends HyperData<?>> T read(InputStream stream, Class<T> clazz);
-	void write(HyperMap hdata, OutputStream stream);
+	void write(HyperData<?> hdata, OutputStream stream);
 
 	<T extends HyperData<?>> T read(String string, Class<T> clazz);
 	String write(HyperData<?> data);
 	
 	<T extends HyperData<?>> T read(Reader reader, Class<T> clazz);
-	void write(HyperMap hdata, Writer writer);
+	void write(HyperData<?> hdata, Writer writer);
 }

@@ -48,7 +48,7 @@ public class HyperDataGson implements HyperDataView {
 	}
 
 	@Override
-	public void write(HyperMap hdata, Writer writer) {
+	public void write(HyperData<?> hdata, Writer writer) {
 		gson.toJson(hdata, writer);		
 	}
 
@@ -58,7 +58,7 @@ public class HyperDataGson implements HyperDataView {
 	}
 
 	@Override
-	public void write(HyperMap hdata, OutputStream stream) {
+	public void write(HyperData<?> hdata, OutputStream stream) {
 		gson.toJson(hdata, new OutputStreamWriter(stream));
 		
 	}
