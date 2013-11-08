@@ -25,7 +25,7 @@ public interface HyperMap {
 	Object get(String name);
 	int size();
 	
-	@Metadata
+	@MetadataProperty
 	Map<String, Object> getMetadata();
 	void setMetadata(Map<String, Object> metadata);
 }

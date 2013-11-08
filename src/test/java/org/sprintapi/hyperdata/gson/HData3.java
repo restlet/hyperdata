@@ -19,14 +19,4 @@ import org.sprintapi.hyperdata.HyperData;
 
 @HyperData
 public class HData3 extends HData3Base {
-
-	private String x;
-
-	public String getX() {
-		return x;
-	}
-
-	public void setX(String x) {
-		this.x = x;
-	}
 }

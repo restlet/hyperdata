@@ -15,13 +15,13 @@
  */
 package org.sprintapi.hyperdata.gson;
 
-import org.sprintapi.hyperdata.Metadata;
+import org.sprintapi.hyperdata.MetadataProperty;
 
 public class HData3Base {
 
 	private Meta1 metaX;
 
-	@Metadata
+	@MetadataProperty
 	public Meta1 getMetaX() {
 		return metaX;
 	}

@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 import org.apache.commons.lang.WordUtils;
 import org.sprintapi.hyperdata.HyperData;
 import org.sprintapi.hyperdata.HyperMap;
-import org.sprintapi.hyperdata.Metadata;
+import org.sprintapi.hyperdata.MetadataProperty;
 
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
@@ -62,7 +62,7 @@ public class HyperDataAdapterFactory extends ReflectiveTypeAdapterFactory implem
 	    MetadataAccess metadataAccess = new MetadataAccess();
 	    
 	    for (Method method : raw.getMethods()) {
-	    	if (method.isAnnotationPresent(Metadata.class)) {
+	    	if (method.isAnnotationPresent(MetadataProperty.class)) {
 	    		if (method.getName().startsWith("get")) {
 	    			metadataAccess.getter = method;
 	    			metadataAccess.fieldName = method.getName().substring(3);
@@ -94,7 +94,7 @@ public class HyperDataAdapterFactory extends ReflectiveTypeAdapterFactory implem
 	    }
 
 	    ObjectConstructor<T> constructor = constructorConstructor.get(type);	    
-	    return (TypeAdapter<T>) new HyperDataTypeAdapter(metadataAccess, constructorConstructor, (ObjectConstructor)constructor, getBoundFields(gson, type, raw), gson, this);
+	    return (TypeAdapter<T>) new HyperDataTypeAdapter(metadataAccess, constructorConstructor, (ObjectConstructor<Object>)constructor, getBoundFields(gson, type, raw), gson, this);
 	}
 	
 	protected class MetadataAccess {
