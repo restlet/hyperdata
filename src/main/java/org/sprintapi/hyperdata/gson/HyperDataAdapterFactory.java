@@ -18,9 +18,9 @@ package org.sprintapi.hyperdata.gson;
 import java.lang.reflect.Method;
 
 import org.apache.commons.lang.WordUtils;
-import org.sprintapi.hyperdata.HyperData;
+import org.sprintapi.hyperdata.HyperDataContainer;
 import org.sprintapi.hyperdata.HyperMap;
-import org.sprintapi.hyperdata.MetadataProperty;
+import org.sprintapi.hyperdata.MetadataContainer;
 
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
@@ -55,14 +55,14 @@ public class HyperDataAdapterFactory extends ReflectiveTypeAdapterFactory implem
 	    	return null; // it's a primitive or HyperMap
 	    }
 
-	    if (!raw.isAnnotationPresent(HyperData.class)) {
+	    if (!raw.isAnnotationPresent(HyperDataContainer.class)) {
 	    	return null; // it's not hyperdata
 	    }
 
 	    MetadataAccess metadataAccess = new MetadataAccess();
 	    
 	    for (Method method : raw.getMethods()) {
-	    	if (method.isAnnotationPresent(MetadataProperty.class)) {
+	    	if (method.isAnnotationPresent(MetadataContainer.class)) {
 	    		if (method.getName().startsWith("get")) {
 	    			metadataAccess.getter = method;
 	    			metadataAccess.fieldName = method.getName().substring(3);

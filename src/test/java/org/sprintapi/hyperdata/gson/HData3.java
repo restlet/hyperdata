@@ -15,8 +15,8 @@
  */
 package org.sprintapi.hyperdata.gson;
 
-import org.sprintapi.hyperdata.HyperData;
+import org.sprintapi.hyperdata.HyperDataContainer;
 
-@HyperData
+@HyperDataContainer
 public class HData3 extends HData3Base {
 }

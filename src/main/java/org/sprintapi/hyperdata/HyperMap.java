@@ -18,14 +18,14 @@ package org.sprintapi.hyperdata;
 import java.util.Map;
 import java.util.Set;
 
-@HyperData
+@HyperDataContainer
 public interface HyperMap {
 
 	Set<String> names();
 	Object get(String name);
 	int size();
 	
-	@MetadataProperty
+	@MetadataContainer
 	Map<String, Object> getMetadata();
 	void setMetadata(Map<String, Object> metadata);
 }

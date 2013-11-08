@@ -15,10 +15,10 @@
  */
 package org.sprintapi.hyperdata.gson;
 
-import org.sprintapi.hyperdata.HyperData;
-import org.sprintapi.hyperdata.MetadataProperty;
+import org.sprintapi.hyperdata.HyperDataContainer;
+import org.sprintapi.hyperdata.MetadataContainer;
 
-@HyperData
+@HyperDataContainer
 public class HData1 {
 
 	private Meta metadata;
@@ -51,7 +51,7 @@ public class HData1 {
 	public Meta getMetadata() {
 		return metadata;
 	}
-	@MetadataProperty
+	@MetadataContainer
 	public void setMetadata(Meta meta) {
 		this.metadata = meta;
 	}
