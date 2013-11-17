@@ -61,6 +61,8 @@ public class HyperDataTypeAdapter extends TypeAdapter<Object> {
 		
 		out.beginObject();
 		try {
+			boolean setType = true;
+			
 			if ((metadataAccess != null) && (metadataAccess.fieldName != null)) {
 
 				if (metadataAccess.getter == null) {
@@ -83,6 +85,9 @@ public class HyperDataTypeAdapter extends TypeAdapter<Object> {
 	    					if (boundField.serialized) {
 	    						out.name("@".concat(boundField.name));
 	    						boundField.write(out, metadata);
+	    						if (setType) {
+	    							setType = !"profile".equals(boundField.name);
+	    						}
 	    					}
 	    				}
 	
@@ -98,6 +103,15 @@ public class HyperDataTypeAdapter extends TypeAdapter<Object> {
 	    				}
 	    			}
 		        }
+			}
+			
+			if (setType && (metadataAccess != null) && (metadataAccess.profile != null) && (metadataAccess.profile.length > 0)) {
+				out.name("@profile");
+				out.beginArray();
+				for (String profile : metadataAccess.profile) {
+					out.value(profile);
+				}
+				out.endArray();
 			}
 			
 			for (BoundField boundField : boundFields.values()) {

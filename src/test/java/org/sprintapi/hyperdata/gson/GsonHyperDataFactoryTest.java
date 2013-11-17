@@ -215,9 +215,16 @@ public class GsonHyperDataFactoryTest {
 		hdata.setC(new HData1());
 		hdata.getC().setA(3d);
 		hdata.getC().setB(false);
-		Assert.assertEquals("{\"@accept\":\"application/json\",\"@href\":\"/a/2\",\"a\":11.1,\"b\":true,\"c\":{\"a\":3.0,\"b\":false}}", view.write(hdata, 1));
+		Assert.assertEquals("{\"@accept\":\"application/json\",\"@href\":\"/a/2\",\"@profile\":[\"urn:test:hdata1\"],\"a\":11.1,\"b\":true,\"c\":{\"@profile\":[\"urn:test:hdata1\"],\"a\":3.0,\"b\":false}}", view.write(hdata, 1));
 	}
-	
+
+	@Test
+	public void testStringWriteHData4() {
+		HData4 hdata = new HData4();
+		hdata.setA("x");
+		Assert.assertEquals("{\"@profile\":[\"urn:test:hdata4\"],\"a\":\"x\"}", view.write(hdata, 1));
+	}
+
 	@Test
 	public void testStringWriteHData3() {
 		HData3 hdata = new HData3();

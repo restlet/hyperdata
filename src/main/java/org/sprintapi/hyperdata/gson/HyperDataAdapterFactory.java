@@ -61,6 +61,11 @@ public class HyperDataAdapterFactory extends ReflectiveTypeAdapterFactory implem
 
 	    MetadataAccess metadataAccess = new MetadataAccess();
 	    
+	    HyperDataContainer hdc = raw.getAnnotation(HyperDataContainer.class);
+	    if ((hdc != null) && (hdc.profile().length > 0)) {
+	    	metadataAccess.profile = hdc.profile(); 
+	    }
+	    
 	    for (Method method : raw.getMethods()) {
 	    	if (method.isAnnotationPresent(MetadataContainer.class)) {
 	    		if (method.getName().startsWith("get")) {
@@ -98,6 +103,7 @@ public class HyperDataAdapterFactory extends ReflectiveTypeAdapterFactory implem
 	}
 	
 	protected class MetadataAccess {
+		public String[] profile;
 		public String fieldName;
 		public Method getter;
 		public Method setter;

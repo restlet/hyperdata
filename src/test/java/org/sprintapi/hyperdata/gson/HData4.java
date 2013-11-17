@@ -16,49 +16,17 @@
 package org.sprintapi.hyperdata.gson;
 
 import org.sprintapi.hyperdata.HyperDataContainer;
-import org.sprintapi.hyperdata.MetadataContainer;
 
-@HyperDataContainer(profile="urn:test:hdata1")
-public class HData1 {
+@HyperDataContainer(profile="urn:test:hdata4")
+public class HData4 {
 
-	private Meta metadata;
-	
-	private Double a;
-	private Boolean b;
-	
-	private HData1 c;
-	
-	private Embedded d;
-	
-	public Double getA() {
+	String a;
+
+	public String getA() {
 		return a;
 	}
-	public void setA(Double a) {
+
+	public void setA(String a) {
 		this.a = a;
-	}
-	public Boolean getB() {
-		return b;
-	}
-	public void setB(Boolean b) {
-		this.b = b;
-	}
-	public HData1 getC() {
-		return c;
-	}
-	public void setC(HData1 c) {
-		this.c = c;
-	}
-	public Meta getMetadata() {
-		return metadata;
-	}
-	@MetadataContainer
-	public void setMetadata(Meta meta) {
-		this.metadata = meta;
-	}
-	public Embedded getD() {
-		return d;
-	}
-	public void setD(Embedded d) {
-		this.d = d;
 	}
 }
