@@ -15,8 +15,10 @@
  */
 package org.sprintapi.hyperdata.gson;
 
+import org.sprintapi.hyperdata.HyperDataContainer;
 import org.sprintapi.hyperdata.MetadataContainer;
 
+@HyperDataContainer(profile="urn:test:hdata3base")
 public class HData3Base {
 
 	private Meta1 metaX;

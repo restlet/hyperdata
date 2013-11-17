@@ -230,6 +230,6 @@ public class GsonHyperDataFactoryTest {
 		HData3 hdata = new HData3();
 		hdata.setMetaX(new Meta1());
 		hdata.getMetaX().setHref("/a/1");
-		Assert.assertEquals("{\"@href\":\"/a/1\"}", view.write(hdata, 1));
+		Assert.assertEquals("{\"@href\":\"/a/1\",\"@profile\":[\"urn:test:hdata3\",\"urn:test:hdata3base\"]}", view.write(hdata, 1));
 	}
 }

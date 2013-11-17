@@ -17,6 +17,6 @@ package org.sprintapi.hyperdata.gson;
 
 import org.sprintapi.hyperdata.HyperDataContainer;
 
-@HyperDataContainer
+@HyperDataContainer(profile="urn:test:hdata3")
 public class HData3 extends HData3Base {
 }

@@ -16,6 +16,9 @@
 package org.sprintapi.hyperdata.gson;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.lang.WordUtils;
 import org.sprintapi.hyperdata.HyperDataContainer;
@@ -61,10 +64,22 @@ public class HyperDataAdapterFactory extends ReflectiveTypeAdapterFactory implem
 
 	    MetadataAccess metadataAccess = new MetadataAccess();
 	    
-	    HyperDataContainer hdc = raw.getAnnotation(HyperDataContainer.class);
-	    if ((hdc != null) && (hdc.profile().length > 0)) {
-	    	metadataAccess.profile = hdc.profile(); 
+	    List<String> profiles = new ArrayList<>();
+	    
+	    
+	    Class<?> c = raw;
+	    while (c != null) {
+		    HyperDataContainer hdc = c.getAnnotation(HyperDataContainer.class);
+		    if ((hdc != null) && (hdc.profile().length > 0)) {
+		    	profiles.addAll(Arrays.asList(hdc.profile())); 
+		    }
+		    if (hdc != null) {
+		    	c = c.getSuperclass();
+		    } else {
+		    	c = null;
+		    }
 	    }
+	    metadataAccess.profile = profiles.toArray(new String[0]);
 	    
 	    for (Method method : raw.getMethods()) {
 	    	if (method.isAnnotationPresent(MetadataContainer.class)) {
