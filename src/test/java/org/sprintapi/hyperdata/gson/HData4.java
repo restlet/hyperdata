@@ -17,7 +17,7 @@ package org.sprintapi.hyperdata.gson;
 
 import org.sprintapi.hyperdata.HyperDataContainer;
 
-@HyperDataContainer(profile="urn:test:hdata4")
+@HyperDataContainer(profile="http://sprintapi.org/hyperdata/test/hdata4")
 public class HData4 {
 
 	String a;

@@ -18,7 +18,7 @@ package org.sprintapi.hyperdata.gson;
 import org.sprintapi.hyperdata.HyperDataContainer;
 import org.sprintapi.hyperdata.MetadataContainer;
 
-@HyperDataContainer(profile="urn:test:hdata1")
+@HyperDataContainer(profile="http://sprintapi.org/hyperdata/test/hdata1")
 public class HData1 {
 
 	private Meta metadata;

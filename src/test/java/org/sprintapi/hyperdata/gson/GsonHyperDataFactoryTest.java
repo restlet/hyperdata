@@ -215,14 +215,14 @@ public class GsonHyperDataFactoryTest {
 		hdata.setC(new HData1());
 		hdata.getC().setA(3d);
 		hdata.getC().setB(false);
-		Assert.assertEquals("{\"@accept\":\"application/json\",\"@href\":\"/a/2\",\"@profile\":[\"urn:test:hdata1\"],\"a\":11.1,\"b\":true,\"c\":{\"@profile\":[\"urn:test:hdata1\"],\"a\":3.0,\"b\":false}}", view.write(hdata, 1));
+		Assert.assertEquals("{\"@accept\":\"application/json\",\"@href\":\"/a/2\",\"@profile\":[\"http://sprintapi.org/hyperdata/test/hdata1\"],\"a\":11.1,\"b\":true,\"c\":{\"@profile\":[\"http://sprintapi.org/hyperdata/test/hdata1\"],\"a\":3.0,\"b\":false}}", view.write(hdata, 1));
 	}
 
 	@Test
 	public void testStringWriteHData4() {
 		HData4 hdata = new HData4();
 		hdata.setA("x");
-		Assert.assertEquals("{\"@profile\":[\"urn:test:hdata4\"],\"a\":\"x\"}", view.write(hdata, 1));
+		Assert.assertEquals("{\"@profile\":[\"http://sprintapi.org/hyperdata/test/hdata4\"],\"a\":\"x\"}", view.write(hdata, 1));
 	}
 
 	@Test
@@ -230,6 +230,6 @@ public class GsonHyperDataFactoryTest {
 		HData3 hdata = new HData3();
 		hdata.setMetaX(new Meta1());
 		hdata.getMetaX().setHref("/a/1");
-		Assert.assertEquals("{\"@href\":\"/a/1\",\"@profile\":[\"urn:test:hdata3\",\"urn:test:hdata3base\"]}", view.write(hdata, 1));
+		Assert.assertEquals("{\"@href\":\"/a/1\",\"@profile\":[\"http://sprintapi.org/hyperdata/test/hdata3\",\"http://sprintapi.org/hyperdata/test/hdata3base\"]}", view.write(hdata, 1));
 	}
 }
