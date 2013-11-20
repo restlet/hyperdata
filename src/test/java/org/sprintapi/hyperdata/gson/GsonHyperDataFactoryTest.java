@@ -222,7 +222,7 @@ public class GsonHyperDataFactoryTest {
 	public void testStringWriteHData4() {
 		HData4 hdata = new HData4();
 		hdata.setA("x");
-		Assert.assertEquals("{\"@profile\":[\"http://sprintapi.org/hyperdata/test/hdata4\"],\"a\":\"x\"}", view.write(hdata, 1));
+		Assert.assertEquals("{\"@profile\":[\"http://sprintapi.org/hyperdata/test/hdata4\",\"http://sprintapi.org/hyperdata/test/hdata4I\"],\"a\":\"x\"}", view.write(hdata, 1));
 	}
 
 	@Test
