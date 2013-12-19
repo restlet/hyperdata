@@ -1,0 +1,178 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.sprintapi</groupId>
+	<artifactId>gwt-json-converter</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>GWT JSON Converter</name>
+	<description>Converts Java bean to JSON string and vice versa.</description>
+  
+	<properties>
+		<gwtVersion>2.5.0-rc1</gwtVersion> 
+		<gwt.plugin.version>2.5.0-rc1</gwt.plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+  
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<inceptionYear>2012</inceptionYear>
+	
+	<scm>
+		<url>git@github.com:filip26/gwt-json-converter.git</url>
+      	<connection>scm:git@github.com:filip26/gwt-json-converter.git</connection>
+      	<developerConnection>scm:git:git@github.com:filip26/gwt-json-converter.git</developerConnection>
+    	<tag>HEAD</tag>
+	</scm>
+
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/filip26/gwt-json-converter/issues</url>
+	</issueManagement>
+  
+	<dependencies> 	
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>${gwtVersion}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+      		<artifactId>gwt-dev</artifactId>
+      		<version>${gwtVersion}</version>
+      		<scope>provided</scope>
+    	</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>	
+  		<dependency>
+      		<groupId>junit</groupId>
+      		<artifactId>junit</artifactId>
+      		<version>4.10</version>
+      		<scope>test</scope>
+    	</dependency>
+	</dependencies>
+  
+	<build>
+	
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+        
+		<resources>
+    		<resource>
+      			<directory>src/main/java</directory>
+      			<includes>
+        			<include>**/*.java</include>
+      			</includes>
+    		</resource>
+   			<resource>
+      			<directory>src/main/resources</directory>
+    		</resource>
+  		</resources>
+
+		<plugins>
+            <plugin>
+                <groupId>com.google.code.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <header>src/license/header.txt</header>
+                    <includes>
+                        <include>src/**/*.java</include>
+                        <include>src/main/java/**/*.xml</include>
+                    </includes>
+                    <properties>
+                        <year>${project.inceptionYear}</year>
+                    </properties>
+                    <encoding>UTF-8</encoding>
+                    <headerDefinitions>
+                        <headerDefinition>src/license/header-definition.xml</headerDefinition>
+                    </headerDefinitions>
+                </configuration>
+     			<executions>
+                	<execution>
+                    	<goals>
+                        	<goal>check</goal>
+                    	</goals>
+                	</execution>
+            	</executions>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+        		</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>${gwt.plugin.version}</version>
+				<configuration>
+					<testTimeOut>500</testTimeOut>
+					<testTimeout>500</testTimeout>
+					<timeOut>1000</timeOut>
+					<testBeginTimeout>500</testBeginTimeout>
+					<testMethodTimeout>500</testMethodTimeout>
+					<webMode>false</webMode>
+					<mode>htmlunit</mode> 
+				</configuration>
+				<executions>
+          			<execution>
+          				<id>id-test</id>
+						<configuration>
+						 <module>org.sprintapi.gwt.converter.JSONConverterTest</module>
+						</configuration>
+            			<goals>
+              				<goal>test</goal>
+						</goals>
+					</execution>
+          			<execution>
+          				<id>id-compile</id>
+            			<goals>
+              				<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+										<configuration>
+            	    <excludes>
+            	    	<exclude>**/Gwt*Test.java</exclude>
+            	    	<exclude>**/*GwtTest.java</exclude>
+                	    <exclude>**/*GwtTest*.java</exclude>
+                    	<exclude>**/*Gwt*Suite*.java</exclude>
+                	</excludes>
+        	    </configuration>
+				
+				<executions>
+				<execution>
+            			<goals>
+              				<goal>test</goal>
+						</goals>						
+    	    	</execution>
+				 </executions>
+        	    
+			</plugin>
+		</plugins>
+	</build>
+</project>
