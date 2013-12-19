@@ -28,4 +28,6 @@ public interface BeanAdapter<T> {
 	Class<T> getBeanClass();
 
 	T createInstance();
+	
+	HyperBeanAttributes getAttributes();
 }
