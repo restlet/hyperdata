@@ -22,11 +22,12 @@ public class BeanPropertyDescriptorImpl implements BeanPropertyDescriptor {
 	private Class<?> clazz;
 	private HyperBeanPropertyAttribute[] attributes;
 
-	public BeanPropertyDescriptorImpl(String name, Class<?> clazz, Kind kind) {
+	public BeanPropertyDescriptorImpl(String name, Class<?> clazz, Kind kind, HyperBeanPropertyAttribute[] attributes) {
 		super();
 		this.name = name;
 		this.clazz = clazz;
 		this.kind = kind;
+		this.attributes = attributes;
 	}
 	
 	public String getName() {

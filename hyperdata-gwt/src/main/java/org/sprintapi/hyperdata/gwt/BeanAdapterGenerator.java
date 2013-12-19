@@ -83,6 +83,7 @@ public class BeanAdapterGenerator extends Generator {
             composeGetPropertyValueMethod(sourceWriter, parameterizedType);
             composeGetPropertiesMethod(sourceWriter, parameterizedType);
             composeGetBeanClassMethod(sourceWriter, parameterizedType);
+            composeGetBeanAttributesMethod(sourceWriter, parameterizedType);
             composeCreateInstanceMethod(sourceWriter, parameterizedType);
             sourceWriter.commit(logger);
         }
@@ -178,6 +179,7 @@ public class BeanAdapterGenerator extends Generator {
 					+ "\", "
 					+ method.getReturnType().getQualifiedSourceName() +".class"
 					+ ", null"		//TODO kind
+					+ ", null"		//TODO attributes
 					+ ")");
 			count += 1;
 		}
@@ -189,7 +191,13 @@ public class BeanAdapterGenerator extends Generator {
         sourceWriter.print("  return " + parameterizedType.getQualifiedSourceName() + ".class;"); 
         sourceWriter.print("}");  
     }
-    
+
+    private void composeGetBeanAttributesMethod(SourceWriter sourceWriter, JClassType parameterizedType) {    	 
+        sourceWriter.print("public org.sprintapi.hyperdata.gwt.client.bean.HyperBeanAttributes getAttributes() {");
+        sourceWriter.print("  return null;");	//FIXME 
+        sourceWriter.print("}");  
+    }
+
     private void composeCreateInstanceMethod(SourceWriter sourceWriter, JClassType parameterizedType) {    	 
         sourceWriter.print("public " + parameterizedType.getQualifiedSourceName()+ " createInstance() {");
         sourceWriter.print("  return new " + parameterizedType.getQualifiedSourceName() + "();");
