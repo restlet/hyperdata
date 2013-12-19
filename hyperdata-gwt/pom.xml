@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.sprintapi</groupId>
-	<artifactId>gwt-json-converter</artifactId>
+	<artifactId>hyperdata-gwt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>GWT JSON Converter</name>
-	<description>Converts Java bean to JSON string and vice versa.</description>
+	<name>Hyperadata Adapter for GWT</name>
+	<description>Converts Java beans to Hyperdata and vice versa.</description>
   
 	<properties>
 		<gwtVersion>2.5.0-rc1</gwtVersion> 
@@ -23,18 +23,23 @@
 	<inceptionYear>2012</inceptionYear>
 	
 	<scm>
-		<url>git@github.com:filip26/gwt-json-converter.git</url>
-      	<connection>scm:git@github.com:filip26/gwt-json-converter.git</connection>
-      	<developerConnection>scm:git:git@github.com:filip26/gwt-json-converter.git</developerConnection>
-    	<tag>HEAD</tag>
+		<url>https://github.com/filip26/hyperdata</url>
+		<connection>scm:git:git@github.com:filip26/hyperdata.git</connection>
+		<developerConnection>scm:git:git@github.com:filip26/hyperdata.git</developerConnection>
 	</scm>
 
 	<issueManagement>
 		<system>github</system>
-		<url>https://github.com/filip26/gwt-json-converter/issues</url>
+		<url>https://github.com/filip26/hyperdata/issues</url>
 	</issueManagement>
-  
 	<dependencies> 	
+		<dependency>
+			<groupId>org.sprintapi</groupId>
+			<artifactId>hyperdata-core</artifactId>
+			<version>1.0.0</version>
+			<scope>compile</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
