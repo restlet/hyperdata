@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.sprintapi.hyperdata.gwt.client.annotation;
+package org.sprintapi.hyperdata;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -22,6 +22,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface JsonTransient {
+public @interface HyperDataProperty {
 
+	String name() default "";
 }

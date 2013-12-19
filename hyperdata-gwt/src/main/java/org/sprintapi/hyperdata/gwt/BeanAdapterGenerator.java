@@ -17,7 +17,7 @@ package org.sprintapi.hyperdata.gwt;
 
 import java.io.PrintWriter;
 
-import org.sprintapi.hyperdata.gwt.client.annotation.JsonTransient;
+import org.sprintapi.hyperdata.HyperDataIgnore;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanAdapter;
 
 import com.google.gwt.core.ext.Generator;
@@ -94,7 +94,7 @@ public class BeanAdapterGenerator extends Generator {
         if (parameterizedType.getInheritableMethods() != null) {
         	int count = 0;
         	for (JMethod method : parameterizedType.getInheritableMethods()) {
-        		if (method.isAnnotationPresent(JsonTransient.class)) {
+        		if (method.isAnnotationPresent(HyperDataIgnore.class)) {
         			continue;
         		}
         		if (method.isPublic() && method.getName().startsWith("set")) {
@@ -122,7 +122,7 @@ public class BeanAdapterGenerator extends Generator {
         if (parameterizedType.getInheritableMethods() != null) {
         	int count = 0;
         	for (JMethod method : parameterizedType.getInheritableMethods()) {
-        		if (method.isAnnotationPresent(JsonTransient.class)) {
+        		if (method.isAnnotationPresent(HyperDataIgnore.class)) {
         			continue;
         		}
         		if (method.isPublic() && method.getName().startsWith("get")) {
@@ -160,7 +160,7 @@ public class BeanAdapterGenerator extends Generator {
     }
 
     private int doComposeGetPropertiesMethod(SourceWriter sourceWriter, JMethod method, int count) {
-		if (method.isAnnotationPresent(JsonTransient.class) || method.getName().equals("getClass")) {
+		if (method.isAnnotationPresent(HyperDataIgnore.class) || method.getName().equals("getClass")) {
 			return count;
 		}
 		if (method.isPublic() && method.getName().startsWith("get")) {
