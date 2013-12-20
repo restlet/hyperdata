@@ -32,7 +32,7 @@ public class GwtBeanAdapterGeneratorTest extends GWTTestCase {
 	
 	@Override
 	public String getModuleName() {
-		return "org.sprintapi.gwt.converter.JSONConverterTest";
+		return "org.sprintapi.hyperdata.gwt.HyperdataTest";
 	}
 	
     @Override

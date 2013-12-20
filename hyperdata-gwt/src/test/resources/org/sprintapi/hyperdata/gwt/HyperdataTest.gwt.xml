@@ -3,7 +3,7 @@
 <module>
 	<inherits name="com.google.gwt.junit.JUnit" />
 	<inherits name="com.google.gwt.logging.Logging" />
-	<inherits name="org.sprintapi.hyperdata.gwt.JSONConverter" />
+	<inherits name="org.sprintapi.hyperdata.gwt.Hyperdata" />
 
 	<set-property name="gwt.logging.logLevel" value="FINE" />
 	

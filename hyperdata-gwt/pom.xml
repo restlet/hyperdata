@@ -142,7 +142,7 @@
           			<execution>
           				<id>id-test</id>
 						<configuration>
-						 <module>org.sprintapi.gwt.converter.JSONConverterTest</module>
+						 <module>org.sprintapi.hyperdata.gwt.HyperdataTest</module>
 						</configuration>
             			<goals>
               				<goal>test</goal>

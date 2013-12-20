@@ -91,7 +91,7 @@ public class BeanAdapterGenerator extends Generator {
 	}
 	
     private void composeSetPropertyValueMethod(SourceWriter sourceWriter, JClassType parameterizedType) {    	 
-        sourceWriter.print("public void setPropertyValue(" + parameterizedType.getQualifiedSourceName() + " object, String name, java.lang.Object value) throws org.sprintapi.gwt.converter.client.ConverterException {");
+        sourceWriter.print("public void setPropertyValue(" + parameterizedType.getQualifiedSourceName() + " object, String name, java.lang.Object value) throws org.sprintapi.hyperdata.gwt.client.ConverterException {");
         if (parameterizedType.getInheritableMethods() != null) {
         	int count = 0;
         	for (JMethod method : parameterizedType.getInheritableMethods()) {
@@ -118,7 +118,7 @@ public class BeanAdapterGenerator extends Generator {
     }
     
     private void composeGetPropertyValueMethod(SourceWriter sourceWriter, JClassType parameterizedType) {    	 
-        sourceWriter.print("public java.lang.Object getPropertyValue(" + parameterizedType.getQualifiedSourceName() + " object, String name) throws org.sprintapi.gwt.converter.client.ConverterException {");
+        sourceWriter.print("public java.lang.Object getPropertyValue(" + parameterizedType.getQualifiedSourceName() + " object, String name) throws org.sprintapi.hyperdata.gwt.client.ConverterException {");
 
         if (parameterizedType.getInheritableMethods() != null) {
         	int count = 0;
@@ -146,8 +146,8 @@ public class BeanAdapterGenerator extends Generator {
     }
 
     private void composeGetPropertiesMethod(SourceWriter sourceWriter, JClassType parameterizedType) {    	 
-        sourceWriter.print("public org.sprintapi.gwt.converter.client.bean.BeanPropertyDescriptor[] getProperties() {");
-    	sourceWriter.print("  return new org.sprintapi.gwt.converter.client.bean.BeanPropertyDescriptor[]{");
+        sourceWriter.print("public org.sprintapi.hyperdata.gwt.client.bean.BeanPropertyDescriptor[] getProperties() {");
+    	sourceWriter.print("  return new org.sprintapi.hyperdata.gwt.client.bean.BeanPropertyDescriptor[]{");
     	
     	int count = 0;
         if (parameterizedType.getInheritableMethods() != null) {
@@ -174,7 +174,7 @@ public class BeanAdapterGenerator extends Generator {
 			}
 			methodName = Character.toLowerCase(methodName.charAt(0)) + methodName.substring(1); 
 			
-			sourceWriter.print("new org.sprintapi.gwt.converter.client.bean.BeanPropertyDescriptorImpl(\""
+			sourceWriter.print("new org.sprintapi.hyperdata.gwt.client.bean.BeanPropertyDescriptorImpl(\""
 					+ methodName
 					+ "\", "
 					+ method.getReturnType().getQualifiedSourceName() +".class"

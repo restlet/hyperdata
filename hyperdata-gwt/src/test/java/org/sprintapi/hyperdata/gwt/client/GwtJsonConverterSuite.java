@@ -25,7 +25,7 @@ import com.google.gwt.junit.tools.GWTTestSuite;
 public class GwtJsonConverterSuite extends GWTTestSuite {
 
 	public static Test suite() {
-		 TestSuite suite = new TestSuite("GWT tests for JSON Converter");
+		 TestSuite suite = new TestSuite("GWT tests for Hyperdata");
 	
 		 suite.addTestSuite(GwtBeanAdapterGeneratorTest.class);
 		 suite.addTestSuite(GwtStringArrayAdapterGeneratorTest.class);
