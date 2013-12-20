@@ -15,13 +15,13 @@
  */
 package org.sprintapi.hyperdata.gwt.client.array;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 
 public interface ArrayAdapter<T> {
 
-	void set(Object array, int dim, int index, Object value) throws ConverterException;
+	void set(Object array, int dim, int index, Object value) throws AdapterException;
 	
-	Object get(Object array, int dim, int index) throws ConverterException;
+	Object get(Object array, int dim, int index) throws AdapterException;
 
 	Class<?> getArrayClass(int dimension);
 

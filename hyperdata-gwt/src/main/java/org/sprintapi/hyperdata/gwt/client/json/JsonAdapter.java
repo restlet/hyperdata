@@ -18,48 +18,48 @@ package org.sprintapi.hyperdata.gwt.client.json;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.sprintapi.hyperdata.gwt.client.Converter;
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.Adapter;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.array.ArrayAdapter;
 import org.sprintapi.hyperdata.gwt.client.array.impl.BuiltinArrayMapping;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonArrayConverter;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonBooleanConverter;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonDateConverter;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonDoubleConverter;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonEnumConverter;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonFloatConverter;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonIntegerConverter;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonLongConverter;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonObjectConverter;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonStringConverter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonArrayAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonBooleanAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonDateAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonDoubleAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonEnumAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonFloatAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonIntegerAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonLongAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonObjectAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonStringAdapter;
 
-public class JsonConverter implements Converter {
+public class JsonAdapter implements Adapter {
 	
-	private final Map<Class<?>, JsonValueConverter<?>> converters;
+	private final Map<Class<?>, JsonValueAdapter<?>> converters;
 	private final Map<Class<?>, BeanAdapter<?>> beanAdapters;
 	private final Map<Class<?>, ArrayAdapter> arrayAdapters;
 	
 	private final JsonReader reader;
 	private final JsonWriter writer;
 	
-	public JsonConverter(JsonReader reader, JsonWriter writer) {
+	public JsonAdapter(JsonReader reader, JsonWriter writer) {
 		super();
 		this.reader = reader;
 		this.writer = writer;
 		
-		this.converters = new HashMap<Class<?>, JsonValueConverter<?>>();
+		this.converters = new HashMap<Class<?>, JsonValueAdapter<?>>();
 		this.beanAdapters = new HashMap<Class<?>, BeanAdapter<?>>();
 		this.arrayAdapters = new HashMap<Class<?>, ArrayAdapter>();
 		
-		register(new JsonStringConverter());
-		register(new JsonIntegerConverter());
-		register(new JsonLongConverter());
-		register(new JsonFloatConverter());
-		register(new JsonDoubleConverter());
-		register(new JsonBooleanConverter());
-		register(new JsonDateConverter());
+		register(new JsonStringAdapter());
+		register(new JsonIntegerAdapter());
+		register(new JsonLongAdapter());
+		register(new JsonFloatAdapter());
+		register(new JsonDoubleAdapter());
+		register(new JsonBooleanAdapter());
+		register(new JsonDateAdapter());
 		
 		register(BuiltinArrayMapping.STRING_ARRAY_ADAPTER);
 		register(BuiltinArrayMapping.INTEGER_ARRAY_ADAPTER);
@@ -71,16 +71,16 @@ public class JsonConverter implements Converter {
 	}
 	
 	@Override
-	public <T> T read(Class<T> clazz, String jsonString) throws ConverterException {
+	public <T> T read(Class<T> clazz, String jsonString) throws AdapterException {
 		
 		if (jsonString == null) {
 			throw new IllegalArgumentException("The 'jsonString' parameter cannot be a null.");
 		}
 		
-		JsonValueConverter<T> converter = findConverter(clazz);
+		JsonValueAdapter<T> converter = findConverter(clazz);
 
 		if (converter == null) {
-			throw new ConverterException("Unknown class: " + clazz);
+			throw new AdapterException("Unknown class: " + clazz);
 		}
 		
 		JsonValue jsonValue = reader.read(jsonString);
@@ -92,17 +92,17 @@ public class JsonConverter implements Converter {
 	}
 
 	@Override
-	public <T> String write(T value) throws ConverterException {
+	public <T> String write(T value) throws AdapterException {
 
 		if (value == null) {
 			throw new IllegalArgumentException("The 'value' parameter cannot be a null.");
 		}
 
 		@SuppressWarnings("unchecked")
-		JsonValueConverter<T> converter = (JsonValueConverter<T>) findConverter(value.getClass());
+		JsonValueAdapter<T> converter = (JsonValueAdapter<T>) findConverter(value.getClass());
 		
 		if (converter == null) {
-			throw new ConverterException("Unknown object: " + value.getClass());
+			throw new AdapterException("Unknown object: " + value.getClass());
 		}
 		
 		return writer.write(converter.write(value));			
@@ -114,31 +114,31 @@ public class JsonConverter implements Converter {
 	}
 	
 	public void setDateTimeFormat(String dateTimeFormat) {
-		register(new JsonDateConverter(dateTimeFormat));
+		register(new JsonDateAdapter(dateTimeFormat));
 	}
 
-	protected void register(JsonValueConverter<?> converter) {
+	protected void register(JsonValueAdapter<?> converter) {
 		converters.put(converter.getJavaClass(), converter);
 	}	
 	
 	@SuppressWarnings("unchecked")
-	public <T> JsonValueConverter<T> findConverter(Class<T> clazz) throws ConverterException {
+	public <T> JsonValueAdapter<T> findConverter(Class<T> clazz) throws AdapterException {
 		if (converters.containsKey(clazz)) {
-			return (JsonValueConverter<T>) converters.get(clazz);
+			return (JsonValueAdapter<T>) converters.get(clazz);
 		}
 		if (beanAdapters.containsKey(clazz)) {
-			return new JsonObjectConverter<T>(this, (BeanAdapter<T>) beanAdapters.get(clazz));
+			return new JsonObjectAdapter<T>(this, (BeanAdapter<T>) beanAdapters.get(clazz));
 		}
 		if (clazz.isEnum()) {
-			return new JsonEnumConverter(clazz);
+			return new JsonEnumAdapter(clazz);
 		}
 		if (clazz.isArray() && arrayAdapters.containsKey(clazz.getComponentType())) {
 			ArrayAdapter adapter = arrayAdapters.get(clazz.getComponentType());
-			JsonValueConverter<Object> c = (JsonValueConverter<Object>) findConverter(clazz.getComponentType());
+			JsonValueAdapter<Object> c = (JsonValueAdapter<Object>) findConverter(clazz.getComponentType());
 			if (c == null) {
-				throw new ConverterException("Unknown class: " + clazz);
+				throw new AdapterException("Unknown class: " + clazz);
 			}
-			return new JsonArrayConverter<T>(c, adapter); 
+			return new JsonArrayAdapter<T>(c, adapter); 
 		}
 		return null;
 	}

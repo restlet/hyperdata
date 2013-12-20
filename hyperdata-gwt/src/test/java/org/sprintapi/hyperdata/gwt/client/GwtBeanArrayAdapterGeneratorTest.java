@@ -15,7 +15,7 @@
  */
 package org.sprintapi.hyperdata.gwt.client;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.json.testdata.TestMapping;
 import org.sprintapi.hyperdata.gwt.client.json.testdata.TestObject;
 
@@ -63,7 +63,7 @@ public class GwtBeanArrayAdapterGeneratorTest extends GWTTestCase {
     	assertEquals(5, ((TestObject[][])a2).length);
     }
     
-    public void testSet() throws ConverterException {
+    public void testSet() throws AdapterException {
     	
     	TestObject[] a = new TestObject[2];
     	TestObject o1 = new TestObject();
@@ -76,7 +76,7 @@ public class GwtBeanArrayAdapterGeneratorTest extends GWTTestCase {
     	assertEquals(o2, a[1]);
     }
 
-    public void testSet2() throws ConverterException {
+    public void testSet2() throws AdapterException {
     	
     	TestObject[][] a = new TestObject[2][];
     	

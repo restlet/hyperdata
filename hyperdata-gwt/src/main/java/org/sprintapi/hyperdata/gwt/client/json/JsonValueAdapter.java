@@ -13,28 +13,16 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.sprintapi.hyperdata.gwt.client.json.value;
+package org.sprintapi.hyperdata.gwt.client.json;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
 
-public class JsonLongConverter extends JsonNumberConverter<Long> {
+public interface JsonValueAdapter<T> {
 
-	@Override
-	public Long read(JsonValue value) throws ConverterException {
-		return Math.round(readDouble(value));
-	}
+	T read(JsonValue value) throws AdapterException;
 
-	@Override
-	public JsonValue write(Long value) {
-		if (value == null) {
-			throw new IllegalArgumentException("The value argument cannot be a null.");
-		}
-		return writeDouble(value);
-	}
-
-	@Override
-	public Class<Long> getJavaClass() {
-		return Long.class;
-	}
+	JsonValue write(T value) throws AdapterException;
+	
+	Class<T> getJavaClass();
 }

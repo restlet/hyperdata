@@ -94,7 +94,7 @@ public class BeanAdapterGenerator extends Generator {
 	}
 	
     private void composeSetPropertyValueMethod(SourceWriter sourceWriter, JClassType parameterizedType) {    	 
-        sourceWriter.print("public void setPropertyValue(" + parameterizedType.getQualifiedSourceName() + " object, String name, java.lang.Object value) throws org.sprintapi.hyperdata.gwt.client.ConverterException {");
+        sourceWriter.print("public void setPropertyValue(" + parameterizedType.getQualifiedSourceName() + " object, String name, java.lang.Object value) throws org.sprintapi.hyperdata.gwt.client.AdapterException {");
         if (parameterizedType.getInheritableMethods() != null) {
         	int count = 0;
         	for (JMethod method : parameterizedType.getInheritableMethods()) {
@@ -121,7 +121,7 @@ public class BeanAdapterGenerator extends Generator {
     }
     
     private void composeGetPropertyValueMethod(SourceWriter sourceWriter, JClassType parameterizedType) {    	 
-        sourceWriter.print("public java.lang.Object getPropertyValue(" + parameterizedType.getQualifiedSourceName() + " object, String name) throws org.sprintapi.hyperdata.gwt.client.ConverterException {");
+        sourceWriter.print("public java.lang.Object getPropertyValue(" + parameterizedType.getQualifiedSourceName() + " object, String name) throws org.sprintapi.hyperdata.gwt.client.AdapterException {");
 
         if (parameterizedType.getInheritableMethods() != null) {
         	int count = 0;

@@ -15,26 +15,30 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json.value;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
-import org.sprintapi.hyperdata.gwt.client.json.JsonValueConverter;
-import org.sprintapi.hyperdata.gwt.client.json.lang.JsonNumber;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
-import org.sprintapi.hyperdata.gwt.client.json.lang.impl.JsonNumberImpl;
 
-public abstract class JsonNumberConverter<T> implements JsonValueConverter<T> {
+public class JsonFloatAdapter extends JsonNumberAdapter<Float> {
 
-	protected Double readDouble(JsonValue value) throws ConverterException {
+	@Override
+	public Float read(JsonValue value) throws AdapterException {
+		Double d = readDouble(value);
+		if (d == null) {
+			return null;
+		}
+		return (float)((double)d);
+	}
+
+	@Override
+	public JsonValue write(Float value) {
 		if (value == null) {
 			throw new IllegalArgumentException("The value argument cannot be a null.");
 		}
-		JsonNumber jsonNumber = value.isNumber();
-		if (jsonNumber == null) {
-			throw new IllegalArgumentException("The value '" + value + "' argument is not " + JsonNumber.class);
-		}
-		return jsonNumber.doubleValue();
+		return writeDouble(value);
 	}
 
-	protected JsonValue writeDouble(double value) {
-		return new JsonNumberImpl(value);
+	@Override
+	public Class<Float> getJavaClass() {
+		return Float.class;
 	}
 }

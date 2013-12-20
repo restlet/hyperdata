@@ -17,18 +17,18 @@ package org.sprintapi.hyperdata.gwt.client.json.value;
 
 import java.util.Stack;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.array.ArrayAdapter;
-import org.sprintapi.hyperdata.gwt.client.json.JsonValueConverter;
+import org.sprintapi.hyperdata.gwt.client.json.JsonValueAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonArray;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
 
-public class JsonArrayConverter<T> implements JsonValueConverter<T> {
+public class JsonArrayAdapter<T> implements JsonValueAdapter<T> {
 
-	private final JsonValueConverter valueConverter;
+	private final JsonValueAdapter valueConverter;
 	private final ArrayAdapter adapter;
 	
-	public JsonArrayConverter(JsonValueConverter valueConverter, ArrayAdapter adapter) {
+	public JsonArrayAdapter(JsonValueAdapter valueConverter, ArrayAdapter adapter) {
 		super();
 		this.adapter = adapter;
 		this.valueConverter = valueConverter;
@@ -36,7 +36,7 @@ public class JsonArrayConverter<T> implements JsonValueConverter<T> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public T read(JsonValue jsonValue) throws ConverterException {
+	public T read(JsonValue jsonValue) throws AdapterException {
 		if (jsonValue == null) {
 			throw new IllegalArgumentException("The 'value' argument cannot be a null.");
 		}
@@ -47,7 +47,7 @@ public class JsonArrayConverter<T> implements JsonValueConverter<T> {
 		return (T)doRead(adapter.createInstance(json.length(), adapter.maxDimension()), json, new Stack<Integer>(), adapter.maxDimension() - 1);
 	}	
 	
-	protected Object doRead(Object array, JsonArray json, Stack<Integer> index, int dimension) throws ConverterException {
+	protected Object doRead(Object array, JsonArray json, Stack<Integer> index, int dimension) throws AdapterException {
 		
 		for (int i=0; i < json.length(); i++) {
 			JsonValue v = json.get(i);
@@ -68,7 +68,7 @@ public class JsonArrayConverter<T> implements JsonValueConverter<T> {
 	}
 
 	@Override
-	public JsonValue write(T value) throws ConverterException {
+	public JsonValue write(T value) throws AdapterException {
 		if (value == null) {
 			throw new IllegalArgumentException("The value argument cannot be a null.");
 		}

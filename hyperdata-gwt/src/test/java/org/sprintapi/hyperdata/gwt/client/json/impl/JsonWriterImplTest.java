@@ -19,7 +19,7 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.json.JsonWriter;
 import org.sprintapi.hyperdata.gwt.client.json.impl.JsonWriterImpl;
 import org.sprintapi.hyperdata.gwt.client.json.lang.impl.JsonBooleanImpl;
@@ -36,7 +36,7 @@ public class JsonWriterImplTest {
     }
 
     @Test
-	public void testNullWrite() throws ConverterException {
+	public void testNullWrite() throws AdapterException {
 			
 		try {
 			String out = writer.write(null);
@@ -49,7 +49,7 @@ public class JsonWriterImplTest {
 	}
 	
     @Test
-    public void testStringWrite() throws ConverterException {
+    public void testStringWrite() throws AdapterException {
 
 		String result = writer.write(new JsonStringImpl("JSON string"));
 		
@@ -57,7 +57,7 @@ public class JsonWriterImplTest {
 		Assert.assertEquals("\"JSON string\"", result);
 	}
 
-	public void testBooleanWrite() throws ConverterException {
+	public void testBooleanWrite() throws AdapterException {
 
 		String result = writer.write(JsonBooleanImpl.getInstance(Boolean.TRUE)); 
 		
@@ -66,7 +66,7 @@ public class JsonWriterImplTest {
 	}
 	
 	@Test
-	public void testNumberWrite() throws ConverterException {
+	public void testNumberWrite() throws AdapterException {
 
 		String result = writer.write(new JsonNumberImpl(32234.3d));
 

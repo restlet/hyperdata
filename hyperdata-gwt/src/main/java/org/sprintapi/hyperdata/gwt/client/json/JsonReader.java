@@ -15,11 +15,11 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
 
 public interface JsonReader {
 
-	JsonValue read(String json) throws ConverterException;
+	JsonValue read(String json) throws AdapterException;
 	
 }

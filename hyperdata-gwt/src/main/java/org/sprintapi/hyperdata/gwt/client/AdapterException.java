@@ -15,15 +15,15 @@
  */
 package org.sprintapi.hyperdata.gwt.client;
 
-public class ConverterException extends Exception {
+public class AdapterException extends Exception {
 
 	private static final long serialVersionUID = -3064500695343855454L;
 
-	public ConverterException(String message) {
+	public AdapterException(String message) {
 		super(message);
 	}
 
-	public ConverterException(Exception ex) {
+	public AdapterException(Exception ex) {
 		super(ex);
 	}
 

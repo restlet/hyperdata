@@ -15,23 +15,23 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json.value;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
-import org.sprintapi.hyperdata.gwt.client.json.JsonValueConverter;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
+import org.sprintapi.hyperdata.gwt.client.json.JsonValueAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonString;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
 import org.sprintapi.hyperdata.gwt.client.json.lang.impl.JsonStringImpl;
 
-public class JsonEnumConverter<T> implements JsonValueConverter<T> {
+public class JsonEnumAdapter<T> implements JsonValueAdapter<T> {
 
 	private final Class clazz;
 	
-	public JsonEnumConverter(Class<T> clazz) {
+	public JsonEnumAdapter(Class<T> clazz) {
 		super();
 		this.clazz = clazz;
 	}
 	
 	@Override
-	public T read(JsonValue value) throws ConverterException {
+	public T read(JsonValue value) throws AdapterException {
 		if (value == null) {
 			throw new IllegalArgumentException("The value argument cannot be a null.");
 		}

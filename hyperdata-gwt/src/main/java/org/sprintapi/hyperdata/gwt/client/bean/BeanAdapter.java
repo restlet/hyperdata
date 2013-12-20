@@ -15,13 +15,13 @@
  */
 package org.sprintapi.hyperdata.gwt.client.bean;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 
 public interface BeanAdapter<T> {
 
-	void setPropertyValue(T bean, String name, Object value) throws ConverterException;
+	void setPropertyValue(T bean, String name, Object value) throws AdapterException;
 	
-	Object getPropertyValue(T bean, String name) throws ConverterException;
+	Object getPropertyValue(T bean, String name) throws AdapterException;
 
 	BeanPropertyDescriptor[] getProperties();
 

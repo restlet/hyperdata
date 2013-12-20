@@ -15,30 +15,30 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json.value;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanAdapter;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanPropertyDescriptor;
-import org.sprintapi.hyperdata.gwt.client.json.JsonConverter;
-import org.sprintapi.hyperdata.gwt.client.json.JsonValueConverter;
+import org.sprintapi.hyperdata.gwt.client.json.JsonAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.JsonValueAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonObject;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
 import org.sprintapi.hyperdata.gwt.client.json.lang.impl.JsonObjectImpl;
 
 import com.google.gwt.json.client.JSONObject;
 
-public class JsonObjectConverter<T> implements JsonValueConverter<T> {
+public class JsonObjectAdapter<T> implements JsonValueAdapter<T> {
 
 	private final BeanAdapter<T> adapter;
-	private final JsonConverter jsonConverter;
+	private final JsonAdapter jsonConverter;
 	
-	public JsonObjectConverter(JsonConverter converter, BeanAdapter<T> adapter) {
+	public JsonObjectAdapter(JsonAdapter converter, BeanAdapter<T> adapter) {
 		super();
 		this.jsonConverter = converter;
 		this.adapter = adapter;
 	}
 	
 	@Override
-	public T read(JsonValue value) throws ConverterException {
+	public T read(JsonValue value) throws AdapterException {
 		if (value == null) {
 			throw new IllegalArgumentException("The value argument cannot be a null.");
 		}
@@ -58,9 +58,9 @@ public class JsonObjectConverter<T> implements JsonValueConverter<T> {
 			if (jsonObject.containsKey(property.getName())) {
 				JsonValue propertyJsonValue = jsonObject.get(property.getName());
 				
-				JsonValueConverter<?> converter = (JsonValueConverter<?>) jsonConverter.findConverter(property.getClazz());					
+				JsonValueAdapter<?> converter = (JsonValueAdapter<?>) jsonConverter.findConverter(property.getClazz());					
 				if (converter == null) {
-					throw new ConverterException("Unknown property '" + property.getName() + "' type: " + property.getClazz());
+					throw new AdapterException("Unknown property '" + property.getName() + "' type: " + property.getClazz());
 				}
 				adapter.setPropertyValue(object, property.getName(), (propertyJsonValue != null) ? converter.read(propertyJsonValue) : null);
 			}
@@ -69,7 +69,7 @@ public class JsonObjectConverter<T> implements JsonValueConverter<T> {
 	}
 
 	@Override
-	public JsonValue write(T value) throws ConverterException {
+	public JsonValue write(T value) throws AdapterException {
 		if (value == null) {
 			throw new IllegalArgumentException("The value argument cannot be a null.");
 		}
@@ -82,9 +82,9 @@ public class JsonObjectConverter<T> implements JsonValueConverter<T> {
 		JsonObjectImpl obj = new JsonObjectImpl();
 
 		for (BeanPropertyDescriptor property : properties) {
-			JsonValueConverter<Object> converter = (JsonValueConverter<Object>) jsonConverter.findConverter(property.getClazz());					
+			JsonValueAdapter<Object> converter = (JsonValueAdapter<Object>) jsonConverter.findConverter(property.getClazz());					
 			if (converter == null) {
-				throw new ConverterException("Unknown property '" + property.getName() + "' type: " + property.getClazz());
+				throw new AdapterException("Unknown property '" + property.getName() + "' type: " + property.getClazz());
 			}
 			if (value != null) {
 				Object pValue = adapter.getPropertyValue(value, property.getName());

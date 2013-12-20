@@ -17,31 +17,31 @@ package org.sprintapi.hyperdata.gwt.client.json.value;
 
 import java.util.Date;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
-import org.sprintapi.hyperdata.gwt.client.json.JsonValueConverter;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
+import org.sprintapi.hyperdata.gwt.client.json.JsonValueAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonString;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
 import org.sprintapi.hyperdata.gwt.client.json.lang.impl.JsonStringImpl;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 
-public class JsonDateConverter implements JsonValueConverter<Date> {
+public class JsonDateAdapter implements JsonValueAdapter<Date> {
 
 	protected static final String ISO_DATETIME = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 	
 	private final String mask;
 	
-	public JsonDateConverter() {
+	public JsonDateAdapter() {
 		this(ISO_DATETIME);
 	}
 	
-	public JsonDateConverter(final String mask) {
+	public JsonDateAdapter(final String mask) {
 		super();
 		this.mask = mask;
 	}
 	
 	@Override
-	public Date read(JsonValue value) throws ConverterException {
+	public Date read(JsonValue value) throws AdapterException {
 		if (value == null) {
 			throw new IllegalArgumentException("The value argument cannot be a null.");
 		}
@@ -52,7 +52,7 @@ public class JsonDateConverter implements JsonValueConverter<Date> {
 		try {
 			return DateTimeFormat.getFormat(mask).parse(jsonString.stringValue());
 		} catch (IllegalArgumentException e) {
-			throw new ConverterException(e);
+			throw new AdapterException(e);
 		}
 	}
 

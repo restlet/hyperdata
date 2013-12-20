@@ -15,16 +15,16 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json.value;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
-import org.sprintapi.hyperdata.gwt.client.json.JsonValueConverter;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
+import org.sprintapi.hyperdata.gwt.client.json.JsonValueAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonBoolean;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
 import org.sprintapi.hyperdata.gwt.client.json.lang.impl.JsonBooleanImpl;
 
-public class JsonBooleanConverter implements JsonValueConverter<Boolean> {
+public class JsonBooleanAdapter implements JsonValueAdapter<Boolean> {
 
 	@Override
-	public Boolean read(JsonValue value) throws ConverterException {
+	public Boolean read(JsonValue value) throws AdapterException {
 		if (value == null) {
 			throw new IllegalArgumentException("The value argument cannot be a null.");
 		}

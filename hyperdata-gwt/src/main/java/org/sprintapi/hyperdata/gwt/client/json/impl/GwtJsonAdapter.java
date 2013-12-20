@@ -13,16 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.sprintapi.hyperdata.gwt.client.json;
+package org.sprintapi.hyperdata.gwt.client.json.impl;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
-import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
+import org.sprintapi.hyperdata.gwt.client.json.JsonAdapter;
 
-public interface JsonValueConverter<T> {
+public class GwtJsonAdapter extends JsonAdapter {
 
-	T read(JsonValue value) throws ConverterException;
-
-	JsonValue write(T value) throws ConverterException;
-	
-	Class<T> getJavaClass();
+	public GwtJsonAdapter() {
+		super(new GwtJsonReader(), new JsonWriterImpl());
+	}
 }

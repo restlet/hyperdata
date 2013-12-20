@@ -15,13 +15,13 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json.value;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
 
-public class JsonIntegerConverter extends JsonNumberConverter<Integer> {
+public class JsonIntegerAdapter extends JsonNumberAdapter<Integer> {
 
 	@Override
-	public Integer read(JsonValue value) throws ConverterException {
+	public Integer read(JsonValue value) throws AdapterException {
 		Double d = readDouble(value);
 		if (d == null) {
 			return null;

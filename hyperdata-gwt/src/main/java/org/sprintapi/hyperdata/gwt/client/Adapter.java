@@ -26,7 +26,7 @@ import org.sprintapi.hyperdata.gwt.client.bean.BeanAdapter;
  * @author filip
  *
  */
-public interface Converter {
+public interface Adapter {
 
 
 	/**
@@ -35,21 +35,21 @@ public interface Converter {
 	 * @param clazz - the type of object to return. 
 	 * @param string - the string representing given object
 	 * @return the converted object
-	 * @throws ConverterException - in case of invalid string
+	 * @throws AdapterException - in case of invalid string
 	 * @throws IllegalArgumentException - in case of <code>null</code> as string
 	 *  
 	 */
-	<T> T read(Class<T> clazz, String string) throws ConverterException;
+	<T> T read(Class<T> clazz, String string) throws AdapterException;
 	
 	/**
 	 * Write an given object to the string.
 	 * 
 	 * @param value - the object to write.
 	 * @return the string representing given object
-	 * @throws ConverterException 
+	 * @throws AdapterException 
 	 * @throws IllegalArgumentException - in case of <code>null</code> as value
 	 */
-	<T> String write(T value) throws ConverterException;
+	<T> String write(T value) throws AdapterException;
 	
 	/**
 	 * Register a <class>BeanAdapter</class>.

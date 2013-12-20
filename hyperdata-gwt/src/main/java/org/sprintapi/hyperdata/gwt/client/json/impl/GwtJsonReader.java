@@ -15,7 +15,7 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json.impl;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.json.JsonReader;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
 import org.sprintapi.hyperdata.gwt.client.json.lang.impl.GwtJsonValueWrapper;
@@ -33,7 +33,7 @@ public class GwtJsonReader implements JsonReader {
 	}
 	
 	@Override
-	public JsonValue read(String json) throws ConverterException {
+	public JsonValue read(String json) throws AdapterException {
 		if (json == null) {
 			return null;
 		}
@@ -46,10 +46,10 @@ public class GwtJsonReader implements JsonReader {
 			return GwtJsonValueWrapper.wrap(jsonValue);
 
 		} catch (IllegalArgumentException ex) {
-			throw new ConverterException(ex);
+			throw new AdapterException(ex);
 		
 		} catch (NullPointerException ex) {
-			throw new ConverterException(ex);
+			throw new AdapterException(ex);
 		}
 	}
 

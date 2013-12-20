@@ -18,22 +18,22 @@ package org.sprintapi.hyperdata.gwt.client.json.value;
 import junit.framework.Assert;
 
 import org.junit.Test;
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.array.impl.ArrayAdapterImpl;
 import org.sprintapi.hyperdata.gwt.client.json.lang.impl.JsonArrayImpl;
 import org.sprintapi.hyperdata.gwt.client.json.lang.impl.JsonNumberImpl;
 import org.sprintapi.hyperdata.gwt.client.json.lang.impl.JsonStringImpl;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonArrayConverter;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonDoubleConverter;
-import org.sprintapi.hyperdata.gwt.client.json.value.JsonStringConverter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonArrayAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonDoubleAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.value.JsonStringAdapter;
 
 public class JsonArrayConverterTest {
 
 	@Test
-	public void testReadStringArray() throws ConverterException {
-		JsonArrayConverter<String[]> converter = 
-				new JsonArrayConverter<String[]>(
-						new JsonStringConverter(),
+	public void testReadStringArray() throws AdapterException {
+		JsonArrayAdapter<String[]> converter = 
+				new JsonArrayAdapter<String[]>(
+						new JsonStringAdapter(),
 						new ArrayAdapterImpl(new Class[]{String.class, String[].class})
 						);
 		
@@ -55,10 +55,10 @@ public class JsonArrayConverterTest {
 	}
 
 	@Test
-	public void testRead2dDoubleArray() throws ConverterException {
-		JsonArrayConverter<Double[][]> converter = 
-				new JsonArrayConverter<Double[][]>(
-						new JsonDoubleConverter(), 
+	public void testRead2dDoubleArray() throws AdapterException {
+		JsonArrayAdapter<Double[][]> converter = 
+				new JsonArrayAdapter<Double[][]>(
+						new JsonDoubleAdapter(), 
 						new ArrayAdapterImpl(new Class[]{Double.class, Double[].class, Double[][].class})
 						);
 				

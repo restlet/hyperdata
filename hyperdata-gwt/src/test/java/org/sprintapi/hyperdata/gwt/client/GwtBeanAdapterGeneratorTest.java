@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanPropertyDescriptor;
 import org.sprintapi.hyperdata.gwt.client.bean.HyperBeanAttributes;
 import org.sprintapi.hyperdata.gwt.client.json.testdata.TestBaseObject;
@@ -57,7 +57,7 @@ public class GwtBeanAdapterGeneratorTest extends GWTTestCase {
     	assertEquals("http://sprintapi.org/profile/test1", attrs.getProfile()[0]);
     }
 
-    public void testGetProperties() throws ConverterException {
+    public void testGetProperties() throws AdapterException {
     	
     	BeanPropertyDescriptor[] properties = TestMapping.BASIC_TYPES_ADAPTER.getProperties(); 
     	
@@ -105,7 +105,7 @@ public class GwtBeanAdapterGeneratorTest extends GWTTestCase {
     	assertNotNull(map.get("metadata").getAttributes());
     }
     
-    public void testGetPropertyValue() throws ConverterException {
+    public void testGetPropertyValue() throws AdapterException {
     	
     	TestObject types = new TestObject();
     	types.setBooleanType(true);
@@ -133,7 +133,7 @@ public class GwtBeanAdapterGeneratorTest extends GWTTestCase {
     	assertEquals(types.getEnumType(), TestMapping.BASIC_TYPES_ADAPTER.getPropertyValue(types, "enumType"));
     }
     
-    public void testSetPropertyValue() throws ConverterException {
+    public void testSetPropertyValue() throws AdapterException {
     	TestObject types = new TestObject();
     	
     	Date date = new Date();
@@ -167,13 +167,13 @@ public class GwtBeanAdapterGeneratorTest extends GWTTestCase {
     	assertEquals(EnumTest.E1, types.getEnumType());
     }
     
-    public void testGetUnexistentPropertyValue() throws ConverterException {
+    public void testGetUnexistentPropertyValue() throws AdapterException {
     	TestObject types = new TestObject();
     	TestMapping.BASIC_TYPES_ADAPTER.getPropertyValue(types, "xxxxx");
     	//TODO
     }
 
-    public void testSetUnexistentPropertyValue() throws ConverterException {
+    public void testSetUnexistentPropertyValue() throws AdapterException {
     	TestObject types = new TestObject();
     	TestMapping.BASIC_TYPES_ADAPTER.setPropertyValue(types, "xxxxx", false);
     	//TODO

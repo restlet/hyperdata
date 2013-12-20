@@ -96,7 +96,7 @@ public class ArrayAdapterGenerator extends Generator {
 
 	//void set(Object array, int dim, int index, Object value) throws ConverterException;
     private void composeSetMethod(SourceWriter sourceWriter, JArrayType parameterizedType) {    	 
-        sourceWriter.print("public void set(java.lang.Object array, int dimension, int index, java.lang.Object value) throws org.sprintapi.hyperdata.gwt.client.ConverterException {");
+        sourceWriter.print("public void set(java.lang.Object array, int dimension, int index, java.lang.Object value) throws org.sprintapi.hyperdata.gwt.client.AdapterException {");
         
         sourceWriter.print("	if (dimension == 0) {");
         sourceWriter.print(" 		((" + parameterizedType.getLeafType().getQualifiedSourceName() + "[])array)[index] = (" + parameterizedType.getLeafType().getQualifiedSourceName() + ")value;" );
@@ -117,7 +117,7 @@ public class ArrayAdapterGenerator extends Generator {
     
 	//Object get(Object array, int dim, int index) throws ConverterException;
     private void composeGetMethod(SourceWriter sourceWriter, JClassType parameterizedType) {    	 
-        sourceWriter.print("public java.lang.Object get(java.lang.Object object, int dim, int index) throws org.sprintapi.hyperdata.gwt.client.ConverterException {");
+        sourceWriter.print("public java.lang.Object get(java.lang.Object object, int dim, int index) throws org.sprintapi.hyperdata.gwt.client.AdapterException {");
 
 //        if (parameterizedType.getMethods() != null) {
 //        	int count = 0;

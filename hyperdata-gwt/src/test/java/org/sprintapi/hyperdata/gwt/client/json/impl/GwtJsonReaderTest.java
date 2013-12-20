@@ -15,7 +15,7 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json.impl;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.json.impl.GwtJsonReader;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonBoolean;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonNumber;
@@ -40,11 +40,11 @@ public class GwtJsonReaderTest extends GWTTestCase {
         reader = new GwtJsonReader();
     }
 
-	public void testNullRead() throws ConverterException {
+	public void testNullRead() throws AdapterException {
 		assertNull(reader.read(null));
 	}
 	
-	public void testStringRead() throws ConverterException {
+	public void testStringRead() throws AdapterException {
 		
 		JsonValue result = reader.read("\"JSON string\"");
 		
@@ -54,7 +54,7 @@ public class GwtJsonReaderTest extends GWTTestCase {
 		assertEquals("JSON string", result.isString().stringValue());
 	}
 
-	public void testBooleanRead() throws ConverterException {
+	public void testBooleanRead() throws AdapterException {
 		
 		JsonValue result = reader.read("true");
 		
@@ -64,7 +64,7 @@ public class GwtJsonReaderTest extends GWTTestCase {
 		assertEquals(Boolean.TRUE, result.isBoolean().booleanValue());
 	}
 		
-	public void testNumberRead() throws ConverterException {
+	public void testNumberRead() throws AdapterException {
 		
 		JsonValue result = reader.read("32234.323");
 		
@@ -74,7 +74,7 @@ public class GwtJsonReaderTest extends GWTTestCase {
 		assertEquals(32234.323d, result.isNumber().doubleValue());
 	}
 	
-    public void testObjectRead() throws ConverterException {
+    public void testObjectRead() throws AdapterException {
     	
 		JsonValue value = reader.read("{ "
 				+ "\"stringType\" : \"JSON String.\", "

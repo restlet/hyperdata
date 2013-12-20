@@ -15,26 +15,36 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json.value;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
+import org.sprintapi.hyperdata.gwt.client.json.JsonValueAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.lang.JsonString;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
+import org.sprintapi.hyperdata.gwt.client.json.lang.impl.JsonStringImpl;
 
-public class JsonDoubleConverter extends JsonNumberConverter<Double> {
-
-	@Override
-	public Double read(JsonValue value) throws ConverterException {
-		return readDouble(value);
-	}
+public class JsonStringAdapter implements JsonValueAdapter<String> {
 
 	@Override
-	public JsonValue write(Double value) {
+	public String read(JsonValue value) throws AdapterException {
 		if (value == null) {
 			throw new IllegalArgumentException("The value argument cannot be a null.");
 		}
-		return writeDouble(value);
+		JsonString jsonString = value.isString();
+		if (jsonString == null) {
+			throw new IllegalArgumentException("The value '" + value + "' argument is not " + JsonString.class);
+		}
+		return jsonString.stringValue();
 	}
 
 	@Override
-	public Class<Double> getJavaClass() {
-		return Double.class;
+	public JsonValue write(String value) {
+		if (value == null) {
+			throw new IllegalArgumentException("The value argument cannot be a null.");
+		}
+		return new JsonStringImpl(value);
+	}
+
+	@Override
+	public Class<String> getJavaClass() {
+		return String.class;
 	}
 }

@@ -17,7 +17,7 @@ package org.sprintapi.hyperdata.gwt.client.array.impl;
 
 import java.lang.reflect.Array;
 
-import org.sprintapi.hyperdata.gwt.client.ConverterException;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.array.ArrayAdapter;
 
 public class ArrayAdapterImpl<T> implements ArrayAdapter<T> {
@@ -30,7 +30,7 @@ public class ArrayAdapterImpl<T> implements ArrayAdapter<T> {
 	}
 
 	@Override
-	public void set(Object array, int dim, int index, Object value) throws ConverterException {
+	public void set(Object array, int dim, int index, Object value) throws AdapterException {
 		Array.set(array, index, value);
 	}
 
@@ -51,7 +51,7 @@ public class ArrayAdapterImpl<T> implements ArrayAdapter<T> {
 	}
 
 	@Override
-	public Object get(Object array, int dim, int index) throws ConverterException {
+	public Object get(Object array, int dim, int index) throws AdapterException {
 		return Array.get(array, index);
 	}
 }
