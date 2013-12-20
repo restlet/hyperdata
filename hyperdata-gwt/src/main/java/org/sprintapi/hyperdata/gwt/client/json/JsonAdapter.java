@@ -35,7 +35,7 @@ import org.sprintapi.hyperdata.gwt.client.json.value.JsonLongAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.value.JsonObjectAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.value.JsonStringAdapter;
 
-public class JsonAdapter implements Adapter {
+public class JsonAdapter implements Adapter, JsonAdapterContext {
 	
 	private final Map<Class<?>, JsonValueAdapter<?>> converters;
 	private final Map<Class<?>, BeanAdapter<?>> beanAdapters;
@@ -77,7 +77,7 @@ public class JsonAdapter implements Adapter {
 			throw new IllegalArgumentException("The 'jsonString' parameter cannot be a null.");
 		}
 		
-		JsonValueAdapter<T> converter = findConverter(clazz);
+		JsonValueAdapter<T> converter = findAdapter(clazz);
 
 		if (converter == null) {
 			throw new AdapterException("Unknown class: " + clazz);
@@ -99,7 +99,7 @@ public class JsonAdapter implements Adapter {
 		}
 
 		@SuppressWarnings("unchecked")
-		JsonValueAdapter<T> converter = (JsonValueAdapter<T>) findConverter(value.getClass());
+		JsonValueAdapter<T> converter = (JsonValueAdapter<T>) findAdapter(value.getClass());
 		
 		if (converter == null) {
 			throw new AdapterException("Unknown object: " + value.getClass());
@@ -120,28 +120,6 @@ public class JsonAdapter implements Adapter {
 	protected void register(JsonValueAdapter<?> converter) {
 		converters.put(converter.getJavaClass(), converter);
 	}	
-	
-	@SuppressWarnings("unchecked")
-	public <T> JsonValueAdapter<T> findConverter(Class<T> clazz) throws AdapterException {
-		if (converters.containsKey(clazz)) {
-			return (JsonValueAdapter<T>) converters.get(clazz);
-		}
-		if (beanAdapters.containsKey(clazz)) {
-			return new JsonObjectAdapter<T>(this, (BeanAdapter<T>) beanAdapters.get(clazz));
-		}
-		if (clazz.isEnum()) {
-			return new JsonEnumAdapter<T>(clazz);
-		}
-		if (clazz.isArray() && arrayAdapters.containsKey(clazz.getComponentType())) {
-			ArrayAdapter<?> adapter = arrayAdapters.get(clazz.getComponentType());
-			JsonValueAdapter<Object> c = (JsonValueAdapter<Object>) findConverter(clazz.getComponentType());
-			if (c == null) {
-				throw new AdapterException("Unknown class: " + clazz);
-			}
-			return new JsonArrayAdapter<T>(c, adapter); 
-		}
-		return null;
-	}
 
 	@Override
 	public <T> void register(ArrayAdapter<T> adapter) {
@@ -153,5 +131,28 @@ public class JsonAdapter implements Adapter {
 	@Override
 	public String mediaType() {
 		return "application/json";
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> JsonValueAdapter<T> findAdapter(Class<T> clazz) throws AdapterException {
+		if (converters.containsKey(clazz)) {
+			return (JsonValueAdapter<T>) converters.get(clazz);
+		}
+		if (beanAdapters.containsKey(clazz)) {
+			return new JsonObjectAdapter<T>(this, (BeanAdapter<T>) beanAdapters.get(clazz));
+		}
+		if (clazz.isEnum()) {
+			return new JsonEnumAdapter<T>(clazz);
+		}
+		if (clazz.isArray() && arrayAdapters.containsKey(clazz.getComponentType())) {
+			ArrayAdapter<T> adapter = (ArrayAdapter<T>) arrayAdapters.get(clazz.getComponentType());
+			JsonValueAdapter<T> c = (JsonValueAdapter<T>) findAdapter(clazz.getComponentType());
+			if (c == null) {
+				throw new AdapterException("Unknown class: " + clazz);
+			}
+			return new JsonArrayAdapter<T>(c, adapter); 
+		}
+		return null;
 	}
 }

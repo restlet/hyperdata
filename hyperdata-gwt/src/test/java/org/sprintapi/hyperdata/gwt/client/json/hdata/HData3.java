@@ -15,8 +15,8 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json.hdata;
 
-import org.sprintapi.hyperdata.HyperDataContainer;
+import org.sprintapi.hyperdata.HyperdataContainer;
 
-@HyperDataContainer(profile="http://sprintapi.org/hyperdata/test/hdata3")
+@HyperdataContainer(profile="http://sprintapi.org/hyperdata/test/hdata3")
 public class HData3 extends HData3Base {
 }

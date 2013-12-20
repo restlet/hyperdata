@@ -18,7 +18,7 @@ package org.sprintapi.hyperdata;
 import java.util.Map;
 import java.util.Set;
 
-@HyperDataContainer
+@HyperdataContainer
 public interface HyperMap {
 
 	Set<String> names();

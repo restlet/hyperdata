@@ -21,7 +21,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.WordUtils;
-import org.sprintapi.hyperdata.HyperDataContainer;
+import org.sprintapi.hyperdata.HyperdataContainer;
 import org.sprintapi.hyperdata.HyperMap;
 import org.sprintapi.hyperdata.MetadataContainer;
 
@@ -58,7 +58,7 @@ public class HyperDataAdapterFactory extends ReflectiveTypeAdapterFactory implem
 	    	return null; // it's a primitive or HyperMap
 	    }
 
-	    if (!raw.isAnnotationPresent(HyperDataContainer.class)) {
+	    if (!raw.isAnnotationPresent(HyperdataContainer.class)) {
 	    	return null; // it's not hyperdata
 	    }
 
@@ -72,14 +72,14 @@ public class HyperDataAdapterFactory extends ReflectiveTypeAdapterFactory implem
 	    		break;
 	    	}
 	    	
-		    HyperDataContainer hdc = c.getAnnotation(HyperDataContainer.class);
+		    HyperdataContainer hdc = c.getAnnotation(HyperdataContainer.class);
 		    if ((hdc != null) && (hdc.profile().length > 0)) {
 		    	profiles.addAll(Arrays.asList(hdc.profile())); 
 		    }
 		    Class<?>[] interfaces = c.getInterfaces();
 		    if (interfaces != null) {
 		    	for (Class<?> i : interfaces) {
-				    hdc = i.getAnnotation(HyperDataContainer.class);
+				    hdc = i.getAnnotation(HyperdataContainer.class);
 				    if ((hdc != null) && (hdc.profile().length > 0)) {
 				    	profiles.addAll(Arrays.asList(hdc.profile())); 
 				    }		    		

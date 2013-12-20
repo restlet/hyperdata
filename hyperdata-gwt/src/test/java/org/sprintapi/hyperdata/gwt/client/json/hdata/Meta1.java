@@ -15,7 +15,7 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json.hdata;
 
-import org.sprintapi.hyperdata.HyperDataProperty;
+import org.sprintapi.hyperdata.HyperdataProperty;
 
 
 
@@ -34,7 +34,7 @@ public class Meta1 {
 		this.href = href;
 	}
 	
-	@HyperDataProperty(name="content-type")
+	@HyperdataProperty(name="content-type")
 	public String getContentType() {
 		return contentType;
 	}

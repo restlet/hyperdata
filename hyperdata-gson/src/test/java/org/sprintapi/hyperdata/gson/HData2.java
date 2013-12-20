@@ -17,10 +17,10 @@ package org.sprintapi.hyperdata.gson;
 
 import java.util.Map;
 
-import org.sprintapi.hyperdata.HyperDataContainer;
+import org.sprintapi.hyperdata.HyperdataContainer;
 import org.sprintapi.hyperdata.MetadataContainer;
 
-@HyperDataContainer
+@HyperdataContainer
 public class HData2 {
 
 	private Map<String, Object> metadata;

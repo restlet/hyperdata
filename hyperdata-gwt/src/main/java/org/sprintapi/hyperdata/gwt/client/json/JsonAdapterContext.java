@@ -13,16 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.sprintapi.hyperdata;
+package org.sprintapi.hyperdata.gwt.client.json;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.sprintapi.hyperdata.gwt.client.AdapterException;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface HyperDataProperty {
 
-	String name() default "";
+
+public interface JsonAdapterContext {
+
+	<T> JsonValueAdapter<T> findAdapter(Class<T> clazz) throws AdapterException;
 }

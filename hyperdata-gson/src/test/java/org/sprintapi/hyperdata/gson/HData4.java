@@ -15,9 +15,9 @@
  */
 package org.sprintapi.hyperdata.gson;
 
-import org.sprintapi.hyperdata.HyperDataContainer;
+import org.sprintapi.hyperdata.HyperdataContainer;
 
-@HyperDataContainer(profile="http://sprintapi.org/hyperdata/test/hdata4")
+@HyperdataContainer(profile="http://sprintapi.org/hyperdata/test/hdata4")
 public class HData4 implements HData4I {
 
 	String a;

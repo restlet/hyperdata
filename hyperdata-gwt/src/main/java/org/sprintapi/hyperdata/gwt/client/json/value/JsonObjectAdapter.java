@@ -19,7 +19,7 @@ import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanAdapter;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanPropertyDescriptor;
 import org.sprintapi.hyperdata.gwt.client.bean.HyperBeanPropertyAttributes;
-import org.sprintapi.hyperdata.gwt.client.json.JsonAdapter;
+import org.sprintapi.hyperdata.gwt.client.json.JsonAdapterContext;
 import org.sprintapi.hyperdata.gwt.client.json.JsonValueAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonObject;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonValue;
@@ -30,11 +30,11 @@ import com.google.gwt.json.client.JSONObject;
 public class JsonObjectAdapter<T> implements JsonValueAdapter<T> {
 
 	private final BeanAdapter<T> adapter;
-	private final JsonAdapter jsonConverter;
+	private final JsonAdapterContext context;
 	
-	public JsonObjectAdapter(JsonAdapter converter, BeanAdapter<T> adapter) {
+	public JsonObjectAdapter(JsonAdapterContext context, BeanAdapter<T> adapter) {
 		super();
-		this.jsonConverter = converter;
+		this.context = context;
 		this.adapter = adapter;
 	}
 	
@@ -62,9 +62,9 @@ public class JsonObjectAdapter<T> implements JsonValueAdapter<T> {
 			} else if (jsonObject.containsKey(property.getName())) {
 				JsonValue propertyJsonValue = jsonObject.get(property.getName());
 				
-				JsonValueAdapter<?> converter = (JsonValueAdapter<?>) jsonConverter.findConverter(property.getClazz());					
+				JsonValueAdapter<?> converter = (JsonValueAdapter<?>) context.findAdapter(property.getClazz());					
 				if (converter == null) {
-					throw new AdapterException("Unknown property '" + property.getName() + "' type: " + property.getClazz());
+					throw new AdapterException("Cannot find an adapter for " + property.getClazz() + ".");
 				}
 				adapter.setPropertyValue(object, property.getName(), (propertyJsonValue != null) ? converter.read(propertyJsonValue) : null);
 			}
@@ -86,9 +86,26 @@ public class JsonObjectAdapter<T> implements JsonValueAdapter<T> {
 		JsonObjectImpl obj = new JsonObjectImpl();
 
 		for (BeanPropertyDescriptor property : properties) {
-			JsonValueAdapter<Object> converter = (JsonValueAdapter<Object>) jsonConverter.findConverter(property.getClazz());					
+			if (property.getAttributes() != null) {
+
+				if (value != null) {
+					Object pValue = adapter.getPropertyValue(value, property.getName());
+					if (pValue != null) {
+						JsonValueAdapter<Object> converter = (JsonValueAdapter<Object>) context.findAdapter(pValue.getClass());					
+						if (converter == null) {
+							throw new AdapterException("Cannot find an adapter for " + pValue.getClass() + ".");
+						}
+//						converter.
+						
+//						obj.put("@" + property.getName(), (pValue != null) ? converter.write(pValue) : null);						
+					}
+				}
+				continue;
+			}
+			
+			JsonValueAdapter<Object> converter = (JsonValueAdapter<Object>) context.findAdapter(property.getClazz());					
 			if (converter == null) {
-				throw new AdapterException("Unknown property '" + property.getName() + "' type: " + property.getClazz());
+				throw new AdapterException("Cannot find an adapter for " + property.getClazz() + ".");
 			}
 			if (value != null) {
 				Object pValue = adapter.getPropertyValue(value, property.getName());

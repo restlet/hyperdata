@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 the original author or authors.
+ *  Copyright 2012 sprintapi.org
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,20 +13,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.sprintapi.hyperdata.gwt.client.json.hdata;
+package org.sprintapi.hyperdata;
 
-import org.sprintapi.hyperdata.HyperdataContainer;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-@HyperdataContainer(profile="http://sprintapi.org/hyperdata/test/hdata4")
-public class HData4 implements HData4I {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface HyperdataIgnore {
 
-	String a;
-
-	public String getA() {
-		return a;
-	}
-
-	public void setA(String a) {
-		this.a = a;
-	}
 }

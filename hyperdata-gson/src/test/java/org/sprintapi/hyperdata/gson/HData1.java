@@ -15,10 +15,10 @@
  */
 package org.sprintapi.hyperdata.gson;
 
-import org.sprintapi.hyperdata.HyperDataContainer;
+import org.sprintapi.hyperdata.HyperdataContainer;
 import org.sprintapi.hyperdata.MetadataContainer;
 
-@HyperDataContainer(profile="http://sprintapi.org/hyperdata/test/hdata1")
+@HyperdataContainer(profile="http://sprintapi.org/hyperdata/test/hdata1")
 public class HData1 {
 
 	private Meta metadata;

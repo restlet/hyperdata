@@ -18,10 +18,10 @@ package org.sprintapi.hyperdata.gwt.client.json.testdata;
 import java.util.Date;
 import java.util.Map;
 
-import org.sprintapi.hyperdata.HyperDataContainer;
+import org.sprintapi.hyperdata.HyperdataContainer;
 import org.sprintapi.hyperdata.MetadataContainer;
 
-@HyperDataContainer(profile={"http://sprintapi.org/profile/test1"})
+@HyperdataContainer(profile={"http://sprintapi.org/profile/test1"})
 public class TestObject extends TestBaseObject {
 
 	public enum EnumTest { E1, E2 };

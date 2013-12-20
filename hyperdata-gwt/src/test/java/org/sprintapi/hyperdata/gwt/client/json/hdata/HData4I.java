@@ -15,9 +15,9 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json.hdata;
 
-import org.sprintapi.hyperdata.HyperDataContainer;
+import org.sprintapi.hyperdata.HyperdataContainer;
 
-@HyperDataContainer(profile="http://sprintapi.org/hyperdata/test/hdata4I")
+@HyperdataContainer(profile="http://sprintapi.org/hyperdata/test/hdata4I")
 public interface HData4I {
 
 	String getA();

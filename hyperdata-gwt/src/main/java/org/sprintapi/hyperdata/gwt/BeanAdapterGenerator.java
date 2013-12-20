@@ -18,8 +18,8 @@ package org.sprintapi.hyperdata.gwt;
 import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
 
-import org.sprintapi.hyperdata.HyperDataContainer;
-import org.sprintapi.hyperdata.HyperDataIgnore;
+import org.sprintapi.hyperdata.HyperdataContainer;
+import org.sprintapi.hyperdata.HyperdataIgnore;
 import org.sprintapi.hyperdata.MetadataContainer;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanAdapter;
 
@@ -98,7 +98,7 @@ public class BeanAdapterGenerator extends Generator {
         if (parameterizedType.getInheritableMethods() != null) {
         	int count = 0;
         	for (JMethod method : parameterizedType.getInheritableMethods()) {
-        		if (method.isAnnotationPresent(HyperDataIgnore.class)) {
+        		if (method.isAnnotationPresent(HyperdataIgnore.class)) {
         			continue;
         		}
         		if (method.isPublic() && method.getName().startsWith("set")) {
@@ -126,7 +126,7 @@ public class BeanAdapterGenerator extends Generator {
         if (parameterizedType.getInheritableMethods() != null) {
         	int count = 0;
         	for (JMethod method : parameterizedType.getInheritableMethods()) {
-        		if (method.isAnnotationPresent(HyperDataIgnore.class)) {
+        		if (method.isAnnotationPresent(HyperdataIgnore.class)) {
         			continue;
         		}
         		if (method.isPublic() && method.getName().startsWith("get")) {
@@ -164,7 +164,7 @@ public class BeanAdapterGenerator extends Generator {
     }
 
     private int doComposeGetPropertiesMethod(SourceWriter sourceWriter, JMethod method, int count) {
-		if (method.isAnnotationPresent(HyperDataIgnore.class) || method.getName().equals("getClass")) {
+		if (method.isAnnotationPresent(HyperdataIgnore.class) || method.getName().equals("getClass")) {
 			return count;
 		}
 		if (method.isPublic() && method.getName().startsWith("get")) {
@@ -206,7 +206,7 @@ public class BeanAdapterGenerator extends Generator {
     private void composeGetBeanAttributesMethod(SourceWriter sourceWriter, JClassType parameterizedType) {    	 
         sourceWriter.print("public org.sprintapi.hyperdata.gwt.client.bean.HyperBeanAttributes getAttributes() {");
         
-        HyperDataContainer hyperbean = parameterizedType.getAnnotation(HyperDataContainer.class); 
+        HyperdataContainer hyperbean = parameterizedType.getAnnotation(HyperdataContainer.class); 
         if (hyperbean != null) {
         	sourceWriter.print("  return new org.sprintapi.hyperdata.gwt.client.bean.HyperBeanAttributes(");
         	if (hyperbean.profile() != null) {
