@@ -15,8 +15,11 @@
  */
 package org.sprintapi.hyperdata.gwt.client.json.testdata;
 
+import org.sprintapi.hyperdata.HyperDataContainer;
 
 
+
+@HyperDataContainer(profile={"http://sprintapi.org/profile/test0"})
 public class TestBaseObject {
 
 	private TestBaseObject selfRef;

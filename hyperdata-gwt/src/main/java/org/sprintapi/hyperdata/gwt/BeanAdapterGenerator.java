@@ -16,7 +16,9 @@
 package org.sprintapi.hyperdata.gwt;
 
 import java.io.PrintWriter;
+import java.lang.annotation.Annotation;
 
+import org.sprintapi.hyperdata.HyperDataContainer;
 import org.sprintapi.hyperdata.HyperDataIgnore;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanAdapter;
 
@@ -194,7 +196,26 @@ public class BeanAdapterGenerator extends Generator {
 
     private void composeGetBeanAttributesMethod(SourceWriter sourceWriter, JClassType parameterizedType) {    	 
         sourceWriter.print("public org.sprintapi.hyperdata.gwt.client.bean.HyperBeanAttributes getAttributes() {");
-        sourceWriter.print("  return null;");	//FIXME 
+        
+        HyperDataContainer hyperbean = parameterizedType.getAnnotation(HyperDataContainer.class); 
+        if (hyperbean != null) {
+        	sourceWriter.print("  return new org.sprintapi.hyperdata.gwt.client.bean.HyperBeanAttributes(");
+        	if (hyperbean.profile() != null) {
+        		sourceWriter.print("new String[]{");
+        		boolean next = false;
+        		for (String profile : hyperbean.profile()) {
+        			if (next) {
+        				sourceWriter.print(",");
+        			}
+        			sourceWriter.print("\"" + profile +"\"");
+        			next = true;
+        		}
+        		sourceWriter.print("}");
+        	}
+        	sourceWriter.print(");");
+        } else {
+            sourceWriter.print("  return null;");
+        }
         sourceWriter.print("}");  
     }
 

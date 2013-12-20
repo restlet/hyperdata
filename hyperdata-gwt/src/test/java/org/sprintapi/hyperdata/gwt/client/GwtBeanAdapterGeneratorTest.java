@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.sprintapi.hyperdata.gwt.client.ConverterException;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanPropertyDescriptor;
+import org.sprintapi.hyperdata.gwt.client.bean.HyperBeanAttributes;
 import org.sprintapi.hyperdata.gwt.client.json.testdata.TestBaseObject;
 import org.sprintapi.hyperdata.gwt.client.json.testdata.TestMapping;
 import org.sprintapi.hyperdata.gwt.client.json.testdata.TestObject;
@@ -45,6 +46,15 @@ public class GwtBeanAdapterGeneratorTest extends GWTTestCase {
 
     	assertNotNull(clazz);
     	assertEquals(TestObject.class, clazz);
+    }
+
+    public void testGetBeanAttributes() {
+    	HyperBeanAttributes attrs = TestMapping.BASIC_TYPES_ADAPTER.getAttributes();
+
+    	assertNotNull(attrs);
+    	assertNotNull(attrs.getProfile());
+    	assertEquals(1, attrs.getProfile().length);
+    	assertEquals("http://sprintapi.org/profile/test1", attrs.getProfile()[0]);
     }
 
     public void testGetProperties() throws ConverterException {

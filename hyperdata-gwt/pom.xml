@@ -7,8 +7,8 @@
 	<description>Converts Java beans to Hyperdata and vice versa.</description>
   
 	<properties>
-		<gwtVersion>2.5.0-rc1</gwtVersion> 
-		<gwt.plugin.version>2.5.0-rc1</gwt.plugin.version>
+		<gwtVersion>2.6.0-rc1</gwtVersion> 
+		<gwt.plugin.version>2.6.0-rc1</gwt.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
   
