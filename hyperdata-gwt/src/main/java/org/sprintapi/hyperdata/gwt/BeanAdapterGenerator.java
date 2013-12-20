@@ -20,6 +20,7 @@ import java.lang.annotation.Annotation;
 
 import org.sprintapi.hyperdata.HyperDataContainer;
 import org.sprintapi.hyperdata.HyperDataIgnore;
+import org.sprintapi.hyperdata.MetadataContainer;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanAdapter;
 
 import com.google.gwt.core.ext.Generator;
@@ -176,13 +177,21 @@ public class BeanAdapterGenerator extends Generator {
 			}
 			methodName = Character.toLowerCase(methodName.charAt(0)) + methodName.substring(1); 
 			
-			sourceWriter.print("new org.sprintapi.hyperdata.gwt.client.bean.BeanPropertyDescriptorImpl(\""
-					+ methodName
-					+ "\", "
+			sourceWriter.print("new org.sprintapi.hyperdata.gwt.client.bean.BeanPropertyDescriptorImpl("
+					+ "\"" + methodName + "\", "
 					+ method.getReturnType().getQualifiedSourceName() +".class"
-					+ ", null"		//TODO kind
-					+ ", null"		//TODO attributes
-					+ ")");
+					+ ", null");		//TODO kind
+			
+			MetadataContainer meta = method.getAnnotation(MetadataContainer.class);
+			if (meta != null) {
+			
+				sourceWriter.print(", new org.sprintapi.hyperdata.gwt.client.bean.HyperBeanPropertyAttributes(");
+				sourceWriter.print(")");
+			} else {
+				sourceWriter.print(", null");
+			}
+			
+			sourceWriter.print(")");
 			count += 1;
 		}
 		return count;

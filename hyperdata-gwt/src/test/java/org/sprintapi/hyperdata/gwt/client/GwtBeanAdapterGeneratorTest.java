@@ -62,7 +62,7 @@ public class GwtBeanAdapterGeneratorTest extends GWTTestCase {
     	BeanPropertyDescriptor[] properties = TestMapping.BASIC_TYPES_ADAPTER.getProperties(); 
     	
     	assertNotNull(properties);
-    	assertEquals(11, properties.length);
+    	assertEquals(12, properties.length);
 
     	Map<String, BeanPropertyDescriptor> map = new HashMap<String, BeanPropertyDescriptor>();
     	for (BeanPropertyDescriptor p : properties) {
@@ -99,6 +99,10 @@ public class GwtBeanAdapterGeneratorTest extends GWTTestCase {
     	
     	assertTrue(map.containsKey("enumType"));
     	assertEquals(TestObject.EnumTest.class, map.get("enumType").getClazz());
+    	
+    	assertTrue(map.containsKey("metadata"));
+    	assertEquals(Map.class, map.get("metadata").getClazz());
+    	assertNotNull(map.get("metadata").getAttributes());
     }
     
     public void testGetPropertyValue() throws ConverterException {

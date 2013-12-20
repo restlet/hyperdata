@@ -16,8 +16,10 @@
 package org.sprintapi.hyperdata.gwt.client.json.testdata;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.sprintapi.hyperdata.HyperDataContainer;
+import org.sprintapi.hyperdata.MetadataContainer;
 
 @HyperDataContainer(profile={"http://sprintapi.org/profile/test1"})
 public class TestObject extends TestBaseObject {
@@ -36,6 +38,8 @@ public class TestObject extends TestBaseObject {
 	private TestObject[][] selfRefArray2; 
 
 	private EnumTest enumType;
+	
+	private Map<String, String> metadata;
 	
 	public Float getFloatType() {
 		return floatType;
@@ -96,5 +100,14 @@ public class TestObject extends TestBaseObject {
 	}
 	public void setEnumType(EnumTest enumType) {
 		this.enumType = enumType;
+	}
+
+	@MetadataContainer
+	public Map<String, String> getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(Map<String, String> metadata) {
+		this.metadata = metadata;
 	}
 }

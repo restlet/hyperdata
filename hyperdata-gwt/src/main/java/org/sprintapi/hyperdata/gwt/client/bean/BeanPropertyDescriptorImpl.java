@@ -20,9 +20,9 @@ public class BeanPropertyDescriptorImpl implements BeanPropertyDescriptor {
 	private String name;
 	private Kind kind;
 	private Class<?> clazz;
-	private HyperBeanPropertyAttribute[] attributes;
+	private HyperBeanPropertyAttributes attributes;
 
-	public BeanPropertyDescriptorImpl(String name, Class<?> clazz, Kind kind, HyperBeanPropertyAttribute[] attributes) {
+	public BeanPropertyDescriptorImpl(String name, Class<?> clazz, Kind kind, HyperBeanPropertyAttributes attributes) {
 		super();
 		this.name = name;
 		this.clazz = clazz;
@@ -49,11 +49,11 @@ public class BeanPropertyDescriptorImpl implements BeanPropertyDescriptor {
 		this.kind = kind;
 	}
 
-	public HyperBeanPropertyAttribute[] getAttributes() {
+	public HyperBeanPropertyAttributes getAttributes() {
 		return attributes;
 	}
 
-	public void setAttributes(HyperBeanPropertyAttribute[] attributes) {
+	public void setAttributes(HyperBeanPropertyAttributes attributes) {
 		this.attributes = attributes;
 	}
 }

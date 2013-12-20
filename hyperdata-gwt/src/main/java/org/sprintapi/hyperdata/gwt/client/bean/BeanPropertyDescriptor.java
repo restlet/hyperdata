@@ -22,4 +22,6 @@ public interface BeanPropertyDescriptor {
 	String getName();
 	Kind getKind();
 	Class<?> getClazz();
+	
+	HyperBeanPropertyAttributes getAttributes();
 }
