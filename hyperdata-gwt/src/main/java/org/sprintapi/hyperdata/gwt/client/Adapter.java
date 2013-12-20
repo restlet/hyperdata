@@ -63,7 +63,7 @@ public interface Adapter {
 	 * 
 	 * @param reader - the adapter to register
 	 */
-	<T> void register(ArrayAdapter adapter);
+	<T> void register(ArrayAdapter<T> adapter);
 	
 	/**
 	 * Return media type (e.g. application/json)

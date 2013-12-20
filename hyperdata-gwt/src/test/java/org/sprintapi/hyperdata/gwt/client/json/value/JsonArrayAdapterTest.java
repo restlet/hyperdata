@@ -27,14 +27,14 @@ import org.sprintapi.hyperdata.gwt.client.json.value.JsonArrayAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.value.JsonDoubleAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.value.JsonStringAdapter;
 
-public class JsonArrayConverterTest {
+public class JsonArrayAdapterTest {
 
 	@Test
 	public void testReadStringArray() throws AdapterException {
 		JsonArrayAdapter<String[]> converter = 
 				new JsonArrayAdapter<String[]>(
 						new JsonStringAdapter(),
-						new ArrayAdapterImpl(new Class[]{String.class, String[].class})
+						new ArrayAdapterImpl<String[]>(new Class<?>[]{String.class, String[].class})
 						);
 		
 		JsonArrayImpl array = new JsonArrayImpl(4);
@@ -59,7 +59,7 @@ public class JsonArrayConverterTest {
 		JsonArrayAdapter<Double[][]> converter = 
 				new JsonArrayAdapter<Double[][]>(
 						new JsonDoubleAdapter(), 
-						new ArrayAdapterImpl(new Class[]{Double.class, Double[].class, Double[][].class})
+						new ArrayAdapterImpl<Double[][]>(new Class[]{Double.class, Double[].class, Double[][].class})
 						);
 				
 		JsonArrayImpl array = new JsonArrayImpl(2);

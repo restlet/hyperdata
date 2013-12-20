@@ -18,6 +18,7 @@ package org.sprintapi.hyperdata.gwt.client.json.value;
 import org.sprintapi.hyperdata.gwt.client.AdapterException;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanAdapter;
 import org.sprintapi.hyperdata.gwt.client.bean.BeanPropertyDescriptor;
+import org.sprintapi.hyperdata.gwt.client.bean.HyperBeanPropertyAttributes;
 import org.sprintapi.hyperdata.gwt.client.json.JsonAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.JsonValueAdapter;
 import org.sprintapi.hyperdata.gwt.client.json.lang.JsonObject;
@@ -55,7 +56,10 @@ public class JsonObjectAdapter<T> implements JsonValueAdapter<T> {
 		T object = adapter.createInstance();
 
 		for (BeanPropertyDescriptor property : properties) {
-			if (jsonObject.containsKey(property.getName())) {
+			HyperBeanPropertyAttributes attrs = property.getAttributes();
+			if (attrs != null) {
+			
+			} else if (jsonObject.containsKey(property.getName())) {
 				JsonValue propertyJsonValue = jsonObject.get(property.getName());
 				
 				JsonValueAdapter<?> converter = (JsonValueAdapter<?>) jsonConverter.findConverter(property.getClazz());					

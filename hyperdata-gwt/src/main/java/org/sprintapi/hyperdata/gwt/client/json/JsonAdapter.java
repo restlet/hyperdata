@@ -39,7 +39,7 @@ public class JsonAdapter implements Adapter {
 	
 	private final Map<Class<?>, JsonValueAdapter<?>> converters;
 	private final Map<Class<?>, BeanAdapter<?>> beanAdapters;
-	private final Map<Class<?>, ArrayAdapter> arrayAdapters;
+	private final Map<Class<?>, ArrayAdapter<?>> arrayAdapters;
 	
 	private final JsonReader reader;
 	private final JsonWriter writer;
@@ -51,7 +51,7 @@ public class JsonAdapter implements Adapter {
 		
 		this.converters = new HashMap<Class<?>, JsonValueAdapter<?>>();
 		this.beanAdapters = new HashMap<Class<?>, BeanAdapter<?>>();
-		this.arrayAdapters = new HashMap<Class<?>, ArrayAdapter>();
+		this.arrayAdapters = new HashMap<Class<?>, ArrayAdapter<?>>();
 		
 		register(new JsonStringAdapter());
 		register(new JsonIntegerAdapter());
@@ -130,10 +130,10 @@ public class JsonAdapter implements Adapter {
 			return new JsonObjectAdapter<T>(this, (BeanAdapter<T>) beanAdapters.get(clazz));
 		}
 		if (clazz.isEnum()) {
-			return new JsonEnumAdapter(clazz);
+			return new JsonEnumAdapter<T>(clazz);
 		}
 		if (clazz.isArray() && arrayAdapters.containsKey(clazz.getComponentType())) {
-			ArrayAdapter adapter = arrayAdapters.get(clazz.getComponentType());
+			ArrayAdapter<?> adapter = arrayAdapters.get(clazz.getComponentType());
 			JsonValueAdapter<Object> c = (JsonValueAdapter<Object>) findConverter(clazz.getComponentType());
 			if (c == null) {
 				throw new AdapterException("Unknown class: " + clazz);
@@ -144,7 +144,7 @@ public class JsonAdapter implements Adapter {
 	}
 
 	@Override
-	public <T> void register(ArrayAdapter adapter) {
+	public <T> void register(ArrayAdapter<T> adapter) {
 		if (!arrayAdapters.containsKey(adapter.getArrayClass(0)) || (arrayAdapters.get(adapter.getArrayClass(0)).maxDimension() <= adapter.maxDimension())) {
 			arrayAdapters.put(adapter.getArrayClass(0), adapter);			
 		}
