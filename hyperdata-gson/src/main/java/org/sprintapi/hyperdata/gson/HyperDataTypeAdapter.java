@@ -106,7 +106,7 @@ public class HyperDataTypeAdapter extends TypeAdapter<Object> {
 			}
 			
 			if (setType && (metadataAccess != null) && (metadataAccess.profile != null) && (metadataAccess.profile.length > 0)) {
-				out.name("@profile");
+				out.name(Constants.META_CHAR.concat("profile"));
 				out.beginArray();
 				for (String profile : metadataAccess.profile) {
 					out.value(profile);

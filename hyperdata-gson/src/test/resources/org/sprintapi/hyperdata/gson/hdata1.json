@@ -1,11 +1,11 @@
 {
-	"@href" : "/y",
-	"@content-type" : "application/json",
+	"_href" : "/y",
+	"_content-type" : "application/json",
 	
 	"a" : 10,
 	"b" : true,
 	"c" : {
-		"@href" : "/x",
+		"_href" : "/x",
 		"b" : false
 	},
 	"d" : {

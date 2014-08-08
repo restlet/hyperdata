@@ -158,7 +158,7 @@ public class GsonHyperDataFactoryTest {
 		Assert.assertNull(data.getMetadata());
 		Assert.assertEquals(0, data.size());
 		
-		HyperMap data2 = view.read("{\"@meta\":false}", HyperHashMap.class, 1);
+		HyperMap data2 = view.read("{\"_meta\":false}", HyperHashMap.class, 1);
 		Assert.assertNotNull(data2);
 		Assert.assertNotNull(data2.getMetadata());
 		Assert.assertNotNull(data2.getMetadata().get("meta"));
@@ -201,7 +201,7 @@ public class GsonHyperDataFactoryTest {
 		map.getMetadata().put("href", "/a/1");
 		map.put("first-name", "John");
 		map.put("last-name", "Doe");
-		Assert.assertEquals("{\"@href\":\"/a/1\",\"first-name\":\"John\",\"last-name\":\"Doe\"}", view.write(map, 1));
+		Assert.assertEquals("{\"_href\":\"/a/1\",\"first-name\":\"John\",\"last-name\":\"Doe\"}", view.write(map, 1));
 	}
 
 	@Test
@@ -215,14 +215,14 @@ public class GsonHyperDataFactoryTest {
 		hdata.setC(new HData1());
 		hdata.getC().setA(3d);
 		hdata.getC().setB(false);
-		Assert.assertEquals("{\"@accept\":\"application/json\",\"@href\":\"/a/2\",\"@profile\":[\"http://sprintapi.org/hyperdata/test/hdata1\"],\"a\":11.1,\"b\":true,\"c\":{\"@profile\":[\"http://sprintapi.org/hyperdata/test/hdata1\"],\"a\":3.0,\"b\":false}}", view.write(hdata, 1));
+		Assert.assertEquals("{\"_accept\":\"application/json\",\"_href\":\"/a/2\",\"_profile\":[\"http://sprintapi.org/hyperdata/test/hdata1\"],\"a\":11.1,\"b\":true,\"c\":{\"_profile\":[\"http://sprintapi.org/hyperdata/test/hdata1\"],\"a\":3.0,\"b\":false}}", view.write(hdata, 1));
 	}
 
 	@Test
 	public void testStringWriteHData4() {
 		HData4 hdata = new HData4();
 		hdata.setA("x");
-		Assert.assertEquals("{\"@profile\":[\"http://sprintapi.org/hyperdata/test/hdata4\",\"http://sprintapi.org/hyperdata/test/hdata4I\"],\"a\":\"x\"}", view.write(hdata, 1));
+		Assert.assertEquals("{\"_profile\":[\"http://sprintapi.org/hyperdata/test/hdata4\",\"http://sprintapi.org/hyperdata/test/hdata4I\"],\"a\":\"x\"}", view.write(hdata, 1));
 	}
 
 	@Test
@@ -230,6 +230,6 @@ public class GsonHyperDataFactoryTest {
 		HData3 hdata = new HData3();
 		hdata.setMetaX(new Meta1());
 		hdata.getMetaX().setHref("/a/1");
-		Assert.assertEquals("{\"@href\":\"/a/1\",\"@profile\":[\"http://sprintapi.org/hyperdata/test/hdata3\",\"http://sprintapi.org/hyperdata/test/hdata3base\"]}", view.write(hdata, 1));
+		Assert.assertEquals("{\"_href\":\"/a/1\",\"_profile\":[\"http://sprintapi.org/hyperdata/test/hdata3\",\"http://sprintapi.org/hyperdata/test/hdata3base\"]}", view.write(hdata, 1));
 	}
 }
