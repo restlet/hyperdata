@@ -83,7 +83,7 @@ public class HyperDataTypeAdapter extends TypeAdapter<Object> {
 	    			if (metaBoundFields != null) {
 	    				for (BoundField boundField : metaBoundFields.values()) {
 	    					if (boundField.serialized) {
-	    						out.name("@".concat(boundField.name));
+	    						out.name(Constants.META_CHAR.concat(boundField.name));
 	    						boundField.write(out, metadata);
 	    						if (setType) {
 	    							setType = !"profile".equals(boundField.name);
@@ -96,7 +96,7 @@ public class HyperDataTypeAdapter extends TypeAdapter<Object> {
 	    				for (Object key : values.keySet()) {
 	    					Object v = values.get(key);
 	    					if (v != null) {
-	    						out.name("@".concat(key.toString()));
+	    						out.name(Constants.META_CHAR.concat(key.toString()));
 	    	    				TypeAdapter ta = gson.getAdapter(v.getClass());
 	    	    				ta.write(out, v);
 	    					}
@@ -152,7 +152,7 @@ public class HyperDataTypeAdapter extends TypeAdapter<Object> {
         	in.beginObject();
         	while (in.hasNext()) {
         		String name = in.nextName();
-	    		if ((name != null) && (metadataField != null) && (name.startsWith("@"))) {
+	    		if ((name != null) && (metadataField != null) && (name.startsWith(Constants.META_CHAR))) {
 	    			if (meta == null) {
 	    				meta = constructorConstructor.get(metadataField.type).construct();
 	    				if (!Map.class.isAssignableFrom(meta.getClass())) {

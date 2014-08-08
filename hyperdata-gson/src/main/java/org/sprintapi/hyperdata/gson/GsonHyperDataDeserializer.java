@@ -54,7 +54,7 @@ public class GsonHyperDataDeserializer implements JsonDeserializer<HyperMap> {
 				Map<String, Object> metadata = null;
 				
 				for (Entry<String, JsonElement> entry : entrySet) {
-					if (entry.getKey().startsWith("@")) {
+					if (entry.getKey().startsWith(Constants.META_CHAR)) {
 						if (metadata == null) {
 							metadata = new HashMap<String, Object>();
 						}	
@@ -62,7 +62,7 @@ public class GsonHyperDataDeserializer implements JsonDeserializer<HyperMap> {
 						if (value != null) {
 							metadata.put(entry.getKey().substring(1),
 								ctx.deserialize(value, 
-									(value.isJsonObject() && value.getAsJsonObject().has("@".concat(HREF_KEY)))
+									(value.isJsonObject() && value.getAsJsonObject().has(Constants.META_CHAR.concat(HREF_KEY)))
 									? HyperMap.class
 									: Object.class
 									)
@@ -74,7 +74,7 @@ public class GsonHyperDataDeserializer implements JsonDeserializer<HyperMap> {
 						if (value != null) {
 							hdata.put(entry.getKey(), 
 								ctx.deserialize(value, 
-									(value.isJsonObject() && value.getAsJsonObject().has("@".concat(HREF_KEY)))
+									(value.isJsonObject() && value.getAsJsonObject().has(Constants.META_CHAR.concat(HREF_KEY)))
 									? HyperMap.class
 									: Object.class
 									)

@@ -40,7 +40,7 @@ public class GsonHyperDataSerializer implements JsonSerializer<HyperMap> {
 		if (metadata != null) {
 			for (String name : metadata.keySet()) {
 				Object value = metadata.get(name);
-				obj.add("@".concat(name), context.serialize(value));
+				obj.add(Constants.META_CHAR.concat(name), context.serialize(value));
 			}
 		}
 		for (String name : src.names()) {
