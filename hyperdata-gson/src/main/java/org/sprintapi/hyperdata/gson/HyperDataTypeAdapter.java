@@ -182,11 +182,11 @@ public class HyperDataTypeAdapter extends TypeAdapter<Object> {
 		            }
 	    		}
         	}
-        	if (metadataAccess.setter == null) {
+        	if (metadataAccess.setter != null) {
+        		metadataAccess.setter.invoke(instance, meta);
         		//TODO
-        		throw new AssertionError();
         	}
-        	metadataAccess.setter.invoke(instance, meta);
+        	
         	
         } catch (IllegalStateException e) {
         	throw new JsonSyntaxException(e);

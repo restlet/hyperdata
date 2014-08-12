@@ -16,6 +16,9 @@
 package org.sprintapi.hyperdata.gson;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import org.junit.Assert;
@@ -29,6 +32,7 @@ import org.sprintapi.hyperdata.HyperMap;
 import org.sprintapi.hyperdata.view.HyperDataView;
 
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 
 
 @RunWith(JUnit4.class)
@@ -44,6 +48,10 @@ public class GsonHyperDataFactoryTest {
 	public ResourceFile ressR1 = new ResourceFile("r1.json");	
 	@Rule
 	public ResourceFile ressHData1 = new ResourceFile("hdata1.json");	
+	@Rule
+	public ResourceFile ressEmptyArray = new ResourceFile("empty-array.json");	
+	@Rule
+	public ResourceFile ressHData1Array = new ResourceFile("hdata1-array.json");	
 	
 	protected HyperDataView view;
 	
@@ -51,7 +59,58 @@ public class GsonHyperDataFactoryTest {
 	public void setup() {
 		view = new HyperDataGsonBuilder().create();
 	}
+	
+	@Test
+	public void testReadEmptyArrayIS() throws IOException {
+		Assert.assertTrue(ressEmptyArray.getFile().exists());
+		
+		Type listType = new TypeToken<ArrayList<HData1>>(){}.getType();
+		
+		Collection<HData1> c = view.read(ressEmptyArray.createInputStream(), listType, 1);
+		Assert.assertNotNull(c);
+		Assert.assertEquals(0, c.size());
+	}
 
+	@Test
+	public void testReadEmptyArrayIS2() throws IOException {
+		Assert.assertTrue(ressEmptyArray.getFile().exists());
+		HData1[] c = view.read(ressEmptyArray.createInputStream(), HData1[].class, 1);
+		Assert.assertNotNull(c);
+		Assert.assertEquals(0, c.length);
+	}
+
+	@Test
+	public void testReadHData1ArrayIS() throws IOException {
+		Assert.assertTrue(ressHData1Array.getFile().exists());
+		
+		Type listType = new TypeToken<ArrayList<HData1>>(){}.getType();
+		
+		Collection<HData1> c = view.read(ressHData1Array.createInputStream(), listType, 1);
+		Assert.assertNotNull(c);
+		Assert.assertEquals(1, c.size());
+		Assert.assertNotNull(c.iterator().next());
+		Assert.assertEquals((Double)1.0, c.iterator().next().getA());
+		Assert.assertNotNull(c.iterator().next().getMetadata());
+		Assert.assertEquals("/y", c.iterator().next().getMetadata().getHref());
+	}
+	
+	@Test
+	public void testReadHData1ArrayIS2() throws IOException {
+		Assert.assertTrue(ressHData1Array.getFile().exists());
+		HData1[] c = view.read(ressHData1Array.createInputStream(), HData1[].class, 1);
+		Assert.assertNotNull(c);
+		Assert.assertEquals(1, c.length);
+		Assert.assertNotNull(c[0]);
+		Assert.assertEquals((Double)1.0, c[0].getA());
+		Assert.assertNotNull(c[0].getMetadata());
+		Assert.assertEquals("/y", c[0].getMetadata().getHref());
+		Assert.assertNotNull(c[0].getC());
+		Assert.assertNotNull(c[0].getC().getA());
+		Assert.assertEquals((Double)2.0, c[0].getC().getA());
+		Assert.assertNotNull(c[0].getC().getMetadata());
+		Assert.assertEquals("/x", c[0].getC().getMetadata().getHref());
+	}
+	
 	@Test
 	public void testReadBlankIS() throws IOException {
 		Assert.assertTrue(ressZeroLength.getFile().exists());

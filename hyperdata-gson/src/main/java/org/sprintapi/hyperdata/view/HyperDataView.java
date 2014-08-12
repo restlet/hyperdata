@@ -15,20 +15,30 @@
  */
 package org.sprintapi.hyperdata.view;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.lang.reflect.Type;
+
+import org.sprintapi.hyperdata.Patch;
 
 
 public interface HyperDataView {
-	
-	<T> T read(InputStream stream, Class<T> clazz, int depth);
-	void write(Object hdata, OutputStream stream, int depth);
 
+	<T> T read(InputStream stream, Type type, int depth);
+	<T> T read(InputStream stream, Class<T> clazz, int depth);
 	<T> T read(String string, Class<T> clazz, int depth);
-	String write(Object data, int depth);
-	
 	<T> T read(Reader reader, Class<T> clazz, int depth);
+	
+	<T> Patch<T> readPatch(InputStream stream, Type type, int depth) throws IOException;
+	<T> Patch<T> readPatch(InputStream stream, Class<T> clazz, int depth) throws IOException;
+	<T> Patch<T> readPatch(String string, Class<T> clazz, int depth);
+	<T> Patch<T> readPatch(Reader reader, Class<T> clazz, int depth) throws IOException;
+	
+	void write(Object hdata, OutputStream stream, int depth);
 	void write(Object hdata, Writer writer, int depth);
+	
+	String write(Object data, int depth);
 }
